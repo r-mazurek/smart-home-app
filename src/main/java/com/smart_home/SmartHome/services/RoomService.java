@@ -1,11 +1,11 @@
 package com.smart_home.SmartHome.services;
 
-import com.smart_home.SmartHome.models.Device;
 import com.smart_home.SmartHome.models.Room;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -18,6 +18,15 @@ public class RoomService {
 
     public Map<String, Room> getRooms() {
         return rooms;
+    }
+
+    public Map<String, Room> getRoomsByName(String searchQuery) {
+        return rooms.entrySet().stream()
+                .filter(entry -> entry.getKey().contains(searchQuery))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue
+                ));
     }
 
     public void addRoom(String name, Room room){
