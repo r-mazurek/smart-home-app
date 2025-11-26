@@ -2,18 +2,24 @@ package com.smart_home.SmartHome.models.deviceTypes;
 
 import com.smart_home.SmartHome.models.Device;
 import com.smart_home.SmartHome.models.Scene;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("light_bulb")
 public class LightBulb extends Device {
     private float brightness;
     private String color;
 
-    public LightBulb(long id, String name, float brightness) {
-        super(id, name);
+    protected LightBulb() {}
+
+    public LightBulb(String name, float brightness) {
+        super(name);
         this.brightness = brightness;
     }
 
-    public LightBulb(long id, String name) {
-        this(id, name, 1.0f);
+    public LightBulb(String name) {
+        this(name, 1.0f);
     }
 
     public float getBrightness() {

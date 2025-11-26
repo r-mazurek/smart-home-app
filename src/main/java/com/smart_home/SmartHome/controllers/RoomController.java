@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/rooms")
@@ -25,25 +24,22 @@ public class RoomController {
         this.sceneService = sceneService;
 
         // TEST DATA
-        service.addRoom("kitchen", new Room());
+        service.addRoom("kitchen");
     }
 
     @PostMapping("/{roomName}")
     public Room createRoom(@PathVariable String roomName) {
         if (service.getRoom(roomName) == null) {
-            service.addRoom(roomName, new Room());
+            service.addRoom(roomName);
         }
         return service.getRoom(roomName);
     }
 
     @GetMapping()
-    public Map<String, Room> getRooms() {
-        return service.getRooms();
-    }
-
-    @GetMapping()
-    public Map<String, Room> getRooms(@RequestParam String roomName) {
-        return service.getRoomsByName(roomName);
+    public List<Room> getRooms(@RequestParam(required = false) String roomName) {
+        if(roomName != null) {
+            return service.getRoomsByName(roomName);
+        } else return service.getRooms();
     }
 
     @PutMapping("/{roomName}")
@@ -62,7 +58,7 @@ public class RoomController {
     }
 
     // DEVICES
-    @PutMapping("/{roomName}/devices")
+    @PostMapping("/{roomName}/devices")
     public Device createDevice(
             @PathVariable String roomName,
             @RequestParam String deviceType,
@@ -74,11 +70,11 @@ public class RoomController {
 
         switch(deviceType) {
             case "lightBulb":
-                LightBulb lightBulb = new LightBulb(service.getNextDeviceId(), deviceName);
+                LightBulb lightBulb = new LightBulb(deviceName);
                 room.addDevice(lightBulb);
                 return lightBulb;
             case "thermostat":
-                Thermostat thermostat = new Thermostat(service.getNextDeviceId(),  deviceName);
+                Thermostat thermostat = new Thermostat(deviceName);
                 room.addDevice(thermostat);
                 return thermostat;
             // other types will follow
@@ -89,17 +85,12 @@ public class RoomController {
     }
 
     @GetMapping("/{roomName}/devices")
-    public List<Device> getRoomStatus( @PathVariable String roomName ) {
+    public List<Device> getRoomStatus( @PathVariable String roomName, @RequestParam(required = false) String deviceName ) {
         Room room = service.getRoom(roomName);
         if (room == null) return Collections.emptyList();
-        return room.getDevices();
-    }
-
-    @GetMapping("/{roomName}/devices")
-    public List<Device> getDevicesByName(@PathVariable String roomName, @RequestParam String deviceName ) {
-        Room room = service.getRoom(roomName);
-        if (room == null) return Collections.emptyList();
-        return room.getDevicesByName(deviceName);
+        if (deviceName != null) {
+            return room.getDevicesByName(deviceName);
+        } else return room.getDevices();
     }
 
     @PostMapping("/{roomName}/devices/{deviceId}")
@@ -110,7 +101,7 @@ public class RoomController {
         Device device = room.getDeviceById(deviceId);
         if (device == null) return false;
 
-        device.toggle();
+        service.toggleDevice(room, device);
         return device.isOn();
     }
 
@@ -129,7 +120,7 @@ public class RoomController {
 
     // SCENES
 
-    @PutMapping("/{roomName}")
+    @PutMapping("/{roomName}/scenes")
     public boolean applyScene(@PathVariable String roomName, @RequestParam String sceneName) {
         Room room = service.getRoom(roomName);
         Scene scene = sceneService.getScene(sceneName);

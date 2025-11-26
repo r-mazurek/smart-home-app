@@ -1,17 +1,23 @@
 package com.smart_home.SmartHome.models.deviceTypes;
 
 import com.smart_home.SmartHome.models.Device;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("thermostat")
 public class Thermostat extends Device {
     private float targetTemperature;
 
-    public Thermostat(long id, String name, float targetTemperature) {
-        super(id, name);
+    protected Thermostat() {}
+
+    public Thermostat(String name, float targetTemperature) {
+        super(name);
         this.targetTemperature = targetTemperature;
     }
 
-    public Thermostat(long id, String name) {
-        this(id, name, 21.0f);
+    public Thermostat(String name) {
+        this(name, 21.0f);
     }
 
     public float getTargetTemperature() {

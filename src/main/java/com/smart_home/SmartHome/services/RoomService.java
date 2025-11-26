@@ -1,50 +1,72 @@
 package com.smart_home.SmartHome.services;
 
+import com.smart_home.SmartHome.models.Device;
 import com.smart_home.SmartHome.models.Room;
+import com.smart_home.SmartHome.repositories.DeviceRepository;
+import com.smart_home.SmartHome.repositories.RoomRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class RoomService {
-    private final Map<String, Room> rooms = new HashMap<>();
-    private long nextDeviceId = 1;
+    private final RoomRepository roomRepository;
+    private final DeviceRepository deviceRepository;
+
+    public RoomService(RoomRepository roomRepository, DeviceRepository deviceRepository) {
+        this.roomRepository = roomRepository;
+        this.deviceRepository = deviceRepository;
+    }
 
     public Room getRoom(String name){
-        return rooms.get(name.toLowerCase());
+        return roomRepository.findByNameIgnoreCase(name);
     }
 
-    public Map<String, Room> getRooms() {
-        return rooms;
+    public List<Room> getRooms() {
+        return roomRepository.findAll();
     }
 
-    public Map<String, Room> getRoomsByName(String searchQuery) {
-        return rooms.entrySet().stream()
-                .filter(entry -> entry.getKey().contains(searchQuery))
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue
-                ));
+    public List<Room> getRoomsByName(String searchQuery) {
+        return roomRepository.findByNameContainingIgnoreCase(searchQuery);
     }
 
-    public void addRoom(String name, Room room){
-        rooms.put(name.toLowerCase(), room);
+    public void addRoom(String name){
+        Room room = new Room();
+        room.setName(name);
+        roomRepository.save(room);
     }
 
-    public boolean renameRoom(String oldName, String newName){
-        Room room = rooms.get(oldName.toLowerCase());
-        if(room == null) return false;
-        rooms.remove(oldName.toLowerCase());
-        rooms.put(newName.toLowerCase(), room);
-        return true;
+    public void renameRoom(String oldName, String newName){
+        Room room = roomRepository.findByNameIgnoreCase(oldName);
+        room.setName(newName);
+        roomRepository.save(room);
     }
 
-    public boolean deleteRoom(String roomName){
-        return rooms.remove(roomName.toLowerCase()) != null;
+    public void deleteRoom(String roomName){
+        Room room = roomRepository.findByNameIgnoreCase(roomName);
+        roomRepository.delete(room);
     }
 
-    public long getNextDeviceId() { return nextDeviceId++; }
+    @Transactional
+    public boolean toggleDevice(String roomName, String deviceName){
+        Room room = roomRepository.findByNameIgnoreCase(roomName);
+        Device device = deviceRepository.findByNameIgnoreCase(deviceName);
+
+        if(room != null && device != null){
+            device.toggle();
+            return device.isOn();
+        }
+        return false;
+    }
+
+    @Transactional
+    public boolean toggleDevice(Room room, Device device){
+        if(room != null && device != null){
+            device.toggle();
+            return device.isOn();
+        }
+        return false;
+    }
 
 }

@@ -18,18 +18,15 @@ public class SceneController {
     }
 
     @GetMapping
-    public List<Scene> getAllScenes(){
-        return new ArrayList<>(service.getScenes().values());
+    public List<Scene> getAllScenes(@RequestParam(required = false) String searchQuery){
+        if(searchQuery != null) {
+            return service.getScenesByName(searchQuery);
+        } else return service.getScenes();
     }
 
     @GetMapping("/{sceneName}")
     public Scene getScene(@PathVariable("sceneName") String name){
         return service.getScene(name);
-    }
-
-    @GetMapping()
-    public List<Scene> getScenesByName(@RequestParam("searchQuery") String searchQuery){
-        return service.getScenesByName(searchQuery);
     }
 
     @PostMapping("/{sceneName}")
@@ -41,7 +38,8 @@ public class SceneController {
     public boolean renameScene(@PathVariable String sceneName, @RequestParam String newName) {
         Scene scene = service.getScene(sceneName);
 
-        return service.renameScene(scene.getId(), newName);
+        service.renameScene(scene.getId(), newName);
+        return true;
     }
 
     @DeleteMapping("/{sceneName}")
@@ -53,6 +51,5 @@ public class SceneController {
         }
         return false;
     }
-
 
 }

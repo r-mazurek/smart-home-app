@@ -2,17 +2,24 @@ package com.smart_home.SmartHome.models;
 
 import com.smart_home.SmartHome.models.deviceTypes.LightBulb;
 import com.smart_home.SmartHome.models.deviceTypes.Thermostat;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Scene {
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+
     private final List<String> deviceTypeAffected;
 
-    public Scene(long id, String name){
-        this.id = id;
+    public Scene(String name){
         this.name = name;
         this.deviceTypeAffected = new ArrayList<>();
     }

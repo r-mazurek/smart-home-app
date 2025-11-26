@@ -1,13 +1,22 @@
 package com.smart_home.SmartHome.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class User {
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String password;
     // soon may add preferences or things like that to help AI suggest the best settings
 
-    public User (long id, String name, String password) {
-        this.id = id;
+    protected User() {};
+
+    public User (String name, String password) {
         this.name = name;
         this.password = password;
     }

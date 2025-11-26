@@ -1,13 +1,22 @@
 package com.smart_home.SmartHome.models;
 
+import jakarta.persistence.*;
+
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="device_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Device {
 
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private boolean isOn = false;
 
-    public Device(long id, String name) {
-        this.id = id;
+    protected Device() {}
+
+    public Device(String name) {
         this.name = name;
     }
 

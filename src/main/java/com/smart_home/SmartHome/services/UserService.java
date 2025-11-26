@@ -1,47 +1,41 @@
 package com.smart_home.SmartHome.services;
 
 import com.smart_home.SmartHome.models.User;
+import com.smart_home.SmartHome.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
-    private final Map<String, User> users = new HashMap<>();
-    private long nextUserId = 1;
+    private final UserRepository userRepository;
 
-    public long getNextUserId() { return nextUserId++; }
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<User> getUsers() {
-        return new ArrayList<User>(users.values());
+        return userRepository.findAll();
     }
 
     public User getUser(String name) {
-        if (name == null) return null;
-        return users.get(name.toLowerCase());
+        return userRepository.findByNameIgnoreCase(name);
     }
 
     public User getUser(long id) {
-        return users.values().stream()
-                .filter(u -> u.getId() == id)
-                .findFirst()
-                .orElse(null);
+        return userRepository.findById(id).orElse(null);
     }
 
     public User registerUser(String name, String password) {
         if (name == null) return null;
 
-        String key = name.toLowerCase();
-        if (users.containsKey(key)) {
+        if (userRepository.findByNameIgnoreCase(name) != null) {
             System.out.println("User already exists");
             return null;
         }
 
-        User user = new User(getNextUserId(), name, password);
-        users.put(key, user);
+        User user = new User(name, password);
+        userRepository.save(user);
         return user;
     }
 
@@ -52,15 +46,18 @@ public class UserService {
     }
 
     public boolean renameUser(String name, String newName) {
-        User user = getUser(name);
+        User user = userRepository.findByNameIgnoreCase(name);
         if (user == null) return false;
         user.setName(newName);
+        userRepository.save(user);
         return true;
     }
 
     public boolean deleteUser(String name) {
-        if (name == null || users.get(name) == null) return false;
-        users.remove(name);
+        if (name == null) return false;
+        User user = userRepository.findByNameIgnoreCase(name);
+        if (user == null) return false;
+        userRepository.delete(user);
         return true;
     }
 }

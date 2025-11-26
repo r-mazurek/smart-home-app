@@ -1,52 +1,48 @@
 package com.smart_home.SmartHome.services;
 
 import com.smart_home.SmartHome.models.Scene;
+import com.smart_home.SmartHome.repositories.SceneRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SceneService {
-    private final Map<Long, Scene> scenes = new HashMap<>();
-    private long nextSceneId = 1;
+    private final SceneRepository sceneRepository;
 
-    public long getNextSceneId() { return nextSceneId++; }
+    public SceneService(SceneRepository sceneRepository) {
+        this.sceneRepository = sceneRepository;
+    }
 
-    public Map<Long, Scene> getScenes() { return scenes; }
+    public List<Scene> getScenes() { return sceneRepository.findAll(); }
 
-    public Scene getScene(long id) { return scenes.get(id); }
     public Scene getScene(String sceneName) {
-        return scenes.values().stream()
-                .filter(s -> s.getName().equalsIgnoreCase(sceneName))
-                .findFirst().orElse(null);
+        return sceneRepository.findByNameIgnoreCase(sceneName);
     }
 
     public List<Scene> getScenesByName(String name) {
-        return scenes.values().stream()
-                .filter(scene -> scene.getName().equals(name))
-                .toList();
+        return sceneRepository.findByNameContainingIgnoreCase(name);
     }
 
-
     public Scene createScene(String name) {
-        Scene scene = new Scene(getNextSceneId(), name);
-        scenes.put(scene.getId(), scene);
+        Scene scene = new Scene(name);
+        sceneRepository.save(scene);
         return scene;
     }
 
-    public boolean renameScene(long id, String newName) {
-        Scene scene = scenes.get(id);
-        if(scene == null) { return false; }
-        scene.setName(newName);
-        return true;
+    public void renameScene(long id, String newName) {
+        Scene scene = sceneRepository.findById(id).orElse(null);
+        if (scene != null) {
+            scene.setName(newName);
+            sceneRepository.save(scene);
+        }
     }
 
     public boolean deleteScene(long id) {
-        Scene scene = scenes.get(id);
-        if(scene == null) { return false; }
-        scenes.remove(id);
-        return true;
+        if (sceneRepository.existsById(id)) {
+            sceneRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
