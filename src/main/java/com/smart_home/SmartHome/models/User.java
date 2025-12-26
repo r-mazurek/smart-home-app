@@ -1,11 +1,12 @@
 package com.smart_home.SmartHome.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
+@Table(name="app_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

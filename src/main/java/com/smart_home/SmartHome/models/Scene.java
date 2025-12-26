@@ -19,6 +19,10 @@ public class Scene {
 
     private final List<String> deviceTypeAffected;
 
+    public Scene() {
+        this.deviceTypeAffected = new ArrayList<>();
+    }
+
     public Scene(String name){
         this.name = name;
         this.deviceTypeAffected = new ArrayList<>();

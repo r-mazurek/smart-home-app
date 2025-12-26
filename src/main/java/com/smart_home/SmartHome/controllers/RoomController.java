@@ -68,20 +68,24 @@ public class RoomController {
 
         if (room == null) return null;
 
+        Device newDevice = null;
+
         switch(deviceType) {
             case "lightBulb":
-                LightBulb lightBulb = new LightBulb(deviceName);
-                room.addDevice(lightBulb);
-                return lightBulb;
+                newDevice = new LightBulb(deviceName);
+                break;
             case "thermostat":
-                Thermostat thermostat = new Thermostat(deviceName);
-                room.addDevice(thermostat);
-                return thermostat;
+                newDevice = new Thermostat(deviceName);
+                break;
             // other types will follow
             default:
                 System.out.println("create device failed, wrong type selected");
                 return null;
         }
+
+        room.addDevice(newDevice);
+        service.updateRoom(room);
+        return newDevice;
     }
 
     @GetMapping("/{roomName}/devices")

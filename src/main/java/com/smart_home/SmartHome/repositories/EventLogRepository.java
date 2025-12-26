@@ -1,0 +1,9 @@
+package com.smart_home.SmartHome.repositories;
+
+import com.smart_home.SmartHome.models.EventLog;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface EventLogRepository extends JpaRepository<EventLog, Long> {
+    List<EventLog> findTop10ByOrderByTimestampDesc();
+}

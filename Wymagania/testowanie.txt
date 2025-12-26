@@ -1,0 +1,103 @@
+Wymagania do projektu zaliczeniowego
+– Testy Automatyczne 2025
+1. Ogólny opis projektu
+Projekt polega na stworzeniu dowolnej aplikacji (front-end, back-end, baza danych), która
+posiada sensowną logikę biznesową i wystarczająco złożoną funkcjonalność, aby dało się
+do niej napisać pełen zestaw testów automatycznych. Można używać projektów z innych
+przedmiotów czy tworzonych poza uczelnią.
+Spełnienie poniższych wymagań w 100% jest równoznaczne z oceną 5.0. Brakujące
+elementy lub trywialny poziom aplikacji może wpłynąć na obniżenie oceny.
+Forma dostarczenia projektu: własne repo + ewentualna prezentacja projektu w razie
+niejasności lub braków
+Termin dostarczenia projektu: 31.01.2026 23:59
+Projekt MUSI zawierać:
+● własny kod aplikacji,
+● testy jednostkowe,
+● testy API,
+● testy BDD,
+● przynajmniej jeden test performance’owy,
+● komplet pipeline’ów CI.
+
+Technologie: można użyć dowolnego języka (Python, JavaScript/TS, Java, Kotlin, Go, C#,
+itp.) pod warunkiem, że spełniasz wszystkie wymagania.
+
+2. Minimalny zakres funkcjonalny aplikacji
+Aplikacja może być dowolna, ale powinna spełniać poniższe kryteria merytoryczne, aby
+umożliwiała sensowne pisanie testów:
+Twoja aplikacja powinna obejmować:
+1. Co najmniej 6 funkcjonalności, które:
+○ mają logikę warunkową,
+○ mają walidacje danych,
+
+○ zwracają różne wartości zależnie od warunków,
+○ modyfikują stan obiektu/systemu.
+2. Co najmniej 3 różne klasy, które:
+○ współpracują ze sobą,
+○ wymieniają dane,
+○ posiadają własne metody,
+3. Co najmniej jedna funkcjonalność wymagająca historii, listy lub rejestru
+danych
+(np. lista komentarzy, rejestr produktów, historia zamówień, log wykonywanych
+operacji).
+4. Co najmniej jedna funkcjonalność zależna od danych użytkownika, np.:
+○ walidacja identyfikatora,
+warunki oparte na wieku, regionie, uprawnieniach,
+○ weryfikacja statusu użytkownika, itp.
+5. API lub endpoint(y) pozwalające wykonywać podstawowe operacje aplikacji (pełen
+CRUD).
+6. Funkcjonalność zewnętrzna, którą można mockować w unit testach, np.:
+○ pobieranie danych z serwisu (sztuczne API),
+○ generowanie numeru, tokenu, identyfikatora,
+○ zewnętrzna baza danych (mongo, redis, itp.)
+○ dowolna zewnętrzna operacja logiczna.
+
+3. Wymagania techniczne
+Repozytorium i workflow
+● Cała ocena dotyczy tylko brancha main.
+● Kod oraz instrukcja zawarta na repo powinien być wystarczająca do prawidłowego
+działania aplikacji i testów
+● Każda funkcjonalność powinna powstać w osobnym branchu → PR → merge.
+● W README.md muszą znaleźć się:
+○ imię i nazwisko,
+○ grupa,
+○ krótki opis projektu,
+○ instrukcja uruchomienia testów i pipeline’ów.
+
+Język i frameworki
+● Python lub dowolny inny język (ale z pełnym zachowaniem wymagań testowych).
+● Unit testy: dowolny framework (unittest, pytest, Jest, JUnit, Cypress, Mocha, itp.).
+
+● API testy: requests/postman/newman lub biblioteki językowe.
+● BDD: behave, pytest-bdd, Cucumber itp.
+● Performance: poza sprawdzaniem response time można użyć bardziej
+zaawansowanych narzędzi (Locust, Artillery, k6, JMeter, własny pomiar czasu).
+
+Struktura projektu
+● Kod aplikacji oddzielony od testów.
+● Testy API nie mogą importować kodu aplikacji (czarna skrzynka).
+● Pliki i moduły mają sensowne nazwy.
+● Zastosowanie dobrych praktyk: SOLID, DRY, czytelność, parametryzacja testów.
+
+4. Wymagania dotyczące testów i CI
+Unit tests
+● Muszą pokrywać całą logikę aplikacji. Pokrycie >80%.
+● Nie wysyłają realnych requestów do zewnętrznych API — używamy mocków.
+● Pipeline z testami jednostkowymi musi być zielony.
+
+Testy API
+● Testują endpointy aplikacji. Cały CRUD jest pokryty
+● Nie importują kodu aplikacji → działają tylko przez HTTP.
+● Pipeline musi być zielony.
+
+Testy BDD
+● Co najmniej jedna pełna funkcjonalność przedstawiona w postaci scenariusza
+Gherkin.
+
+● Pipeline BDD musi być zielony.
+
+Test performance’owy
+● Forma dowolna (np. 1000 wywołań endpointu, pomiar czasu funkcji, stresstest).
+● Pipeline musi być zielony.
+
+Code coverage
+● Narzędzie zależne od języka (coverage.py, nyc, Jacoco, Istanbul, itp.).

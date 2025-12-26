@@ -2,8 +2,10 @@ package com.smart_home.SmartHome.services;
 
 import com.smart_home.SmartHome.models.Device;
 import com.smart_home.SmartHome.models.Room;
+import com.smart_home.SmartHome.models.EventLog;
 import com.smart_home.SmartHome.repositories.DeviceRepository;
 import com.smart_home.SmartHome.repositories.RoomRepository;
+import com.smart_home.SmartHome.repositories.EventLogRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,12 @@ import java.util.List;
 public class RoomService {
     private final RoomRepository roomRepository;
     private final DeviceRepository deviceRepository;
+    private final EventLogRepository eventLogRepository;
 
-    public RoomService(RoomRepository roomRepository, DeviceRepository deviceRepository) {
+    public RoomService(RoomRepository roomRepository, DeviceRepository deviceRepository, EventLogRepository eventLogRepository) {
         this.roomRepository = roomRepository;
         this.deviceRepository = deviceRepository;
+        this.eventLogRepository = eventLogRepository;
     }
 
     public Room getRoom(String name){
@@ -34,6 +38,10 @@ public class RoomService {
     public void addRoom(String name){
         Room room = new Room();
         room.setName(name);
+        roomRepository.save(room);
+    }
+
+    public void updateRoom(Room room){
         roomRepository.save(room);
     }
 
@@ -55,18 +63,28 @@ public class RoomService {
 
         if(room != null && device != null){
             device.toggle();
+
+            // log
+            String status = device.isOn() ? "on" : "off";
+            String msg = "Device " + deviceName + " in " + roomName + " has been switched " + status;
+            eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
+
             return device.isOn();
         }
         return false;
     }
 
     @Transactional
-    public boolean toggleDevice(Room room, Device device){
-        if(room != null && device != null){
+    public void toggleDevice(Room room, Device device) {
+        if (room != null && device != null) {
+
+            // log
+            String status = device.isOn() ? "on" : "off";
+            String msg = "Device " + device.getName() + " in " + room.getName() + " has been switched " + status;
+            eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
+
             device.toggle();
-            return device.isOn();
         }
-        return false;
     }
 
 }
