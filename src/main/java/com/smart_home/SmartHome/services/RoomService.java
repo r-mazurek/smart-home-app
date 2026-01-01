@@ -8,6 +8,8 @@ import com.smart_home.SmartHome.repositories.RoomRepository;
 import com.smart_home.SmartHome.repositories.EventLogRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import com.smart_home.SmartHome.controllers.SseController;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
 
@@ -16,11 +18,16 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final DeviceRepository deviceRepository;
     private final EventLogRepository eventLogRepository;
+    private final SseController sseController;
 
-    public RoomService(RoomRepository roomRepository, DeviceRepository deviceRepository, EventLogRepository eventLogRepository) {
+    public RoomService(RoomRepository roomRepository,
+                       DeviceRepository deviceRepository,
+                       EventLogRepository eventLogRepository,
+                       @Lazy SseController sseController) {
         this.roomRepository = roomRepository;
         this.deviceRepository = deviceRepository;
         this.eventLogRepository = eventLogRepository;
+        this.sseController = sseController;
     }
 
     public Room getRoom(String name){
@@ -68,6 +75,8 @@ public class RoomService {
             String status = device.isOn() ? "on" : "off";
             String msg = "Device " + deviceName + " in " + roomName + " has been switched " + status;
             eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
+            EventLog savedLog = eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
+            sseController.sendLogToClients(savedLog);
 
             return device.isOn();
         }
@@ -82,6 +91,8 @@ public class RoomService {
             String status = device.isOn() ? "on" : "off";
             String msg = "Device " + device.getName() + " in " + room.getName() + " has been switched " + status;
             eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
+            EventLog savedLog = eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
+            sseController.sendLogToClients(savedLog);
 
             device.toggle();
         }

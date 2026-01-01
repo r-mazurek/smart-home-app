@@ -1,25 +1,35 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Room, EventLog } from "@/types";
+import { useAppDispatch, useAppSelector} from "@/lib/hooks";
+import { fetchRooms} from "@/lib/features/rooms/roomsSlice";
+import { Room, EventLog, WeatherData } from "@/types";
+import Link from "next/link"
 
 export default function Home() {
-    const [rooms, setRooms] = useState<Room[]>([]);
+    const dispatch = useAppDispatch();
+    const { items: rooms, status } = useAppSelector((state) => state.rooms);
     const [logs, setLogs] = useState<EventLog[]>([]);
+    const [weather, setWeather] = useState<WeatherData | null>(null);
     const [newRoomName, setNewRoomName] = useState("");
 
-    const fetchData = async () => {
-        try {
-            const roomsRes = await fetch("http://localhost:8080/rooms");
-            if (roomsRes.ok) {
-                const roomsData = await roomsRes.json();
-                setRooms(Array.isArray(roomsData) ? roomsData : Object.values(roomsData));
-            }
+    const getWeatherIcon = (code: number) => {
+        if (code === 0) return "☀️";
+        if (code >= 1 && code <= 3) return "⛅";
+        if (code >= 45 && code <= 48) return "🌫️";
+        if (code >= 51 && code <= 67) return "🌧️";
+        if (code >= 71 && code <= 77) return "❄️";
+        return "🌡️";
+    };
 
-            const logsRes = await fetch("http://localhost:8080/logs");
-            if (logsRes.ok) {
-                const logsData = await logsRes.json();
-                setLogs(logsData);
+    const fetchData = async () => {
+        dispatch(fetchRooms());
+
+        try {
+            const weatherRes = await fetch("http://localhost:8080/weather");
+            if (weatherRes.ok) {
+                const weatherData = await weatherRes.json();
+                setWeather(weatherData);
             }
         } catch (error) {
             console.error("Błąd połączenia z API:", error);
@@ -28,27 +38,55 @@ export default function Home() {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 2000);
-        return () => clearInterval(interval);
-    }, []);
+        const eventSource = new EventSource("http://localhost:8080/stream-logs");
+        eventSource.onopen = () => {
+            console.log("Polaczono z SSE")
+        };
+
+        eventSource.addEventListener("new-log", (event) => {
+            const newLog: EventLog = JSON.parse(event.data);
+            setLogs((prevLogs) => [newLog, ...prevLogs]);
+            dispatch(fetchRooms());
+        });
+
+        eventSource.onerror = (err) => {
+            console.error("Blad SSE: ", err);
+            eventSource.close();
+        };
+
+        return () => {
+            eventSource.close();
+        };
+
+    }, [dispatch]);
 
     const handleAddRoom = async () => {
         if (!newRoomName) return;
         await fetch(`http://localhost:8080/rooms/${newRoomName}`, { method: "POST" });
         setNewRoomName("");
-        fetchData()
+        dispatch(fetchRooms());
     };
 
     const toggleDevice = async (roomName: string, deviceId: number) => {
         await fetch(`http://localhost:8080/rooms/${roomName}/devices/${deviceId}`, {
             method: "POST",
         });
-        fetchData();
+        dispatch(fetchRooms());
     };
 
     return (
         <main className="min-h-screen p-8 bg-gray-50 text-gray-800 font-sans">
             <h1 className="text-4xl font-bold mb-8 text-blue-600">🏠 Smart Home Dashboard</h1>
+
+            {weather && (
+                <div className="bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-4">
+                    <span className="text-4xl">{getWeatherIcon(weather.current_weather.weathercode)}</span>
+                    <div>
+                        <p className="text-2xl font-bold">{weather.current_weather.temperature}°C</p>
+                        <p className="text-sm opacity-90">Wiatr: {weather.current_weather.windspeed} km/h</p>
+                    </div>
+                </div>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -75,7 +113,12 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {rooms.map((room) => (
                             <div key={room.id || room.name} className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-                                <h2 className="text-2xl font-semibold mb-4 text-gray-700">{room.name}</h2>
+                                <div className="flex justify-between items-start mb-4">
+                                    <Link href={`/rooms/${room.id}`} className="hover:text-blue-600 hover:underline">
+                                        <h2 className="text-xl font-semibold text-gray-700">{room.name}</h2>
+                                    </Link>
+                                    <span className="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-full">ID: {room.id}</span>
+                                </div>
 
                                 {room.devices.length === 0 ? (
                                     <p className="text-gray-400 text-sm">Brak urządzeń</p>
@@ -87,7 +130,9 @@ export default function Home() {
                           {device.name}
                         </span>
                                                 <button
-                                                    onClick={() => toggleDevice(room.name, device.id)}
+                                                    onClick={() => {
+                                                        toggleDevice(room.name, device.id)
+                                                    }}
                                                     className={`px-4 py-1 rounded text-sm transition ${
                                                         device.isOn
                                                             ? "bg-green-100 text-green-700 hover:bg-green-200"

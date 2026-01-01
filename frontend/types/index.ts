@@ -17,3 +17,11 @@ export interface EventLog {
     message: string;
     timestamp: string;
 }
+
+export interface WeatherData {
+    current_weather: {
+        temperature: number;
+        windspeed: number;
+        weathercode: number;
+    }
+}
