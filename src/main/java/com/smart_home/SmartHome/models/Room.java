@@ -19,6 +19,15 @@ public class Room {
 
     public Room() {}
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", devices=" + devices +
+                '}';
+    }
+
     public void setName(String newName) {
         this.name = newName;
     }

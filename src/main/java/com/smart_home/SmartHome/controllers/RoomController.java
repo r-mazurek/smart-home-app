@@ -9,6 +9,12 @@ import com.smart_home.SmartHome.services.RoomService;
 
 import com.smart_home.SmartHome.services.SceneService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,17 +41,22 @@ public class RoomController {
         return service.getRoom(roomName);
     }
 
-    @GetMapping()
-    public List<Room> getRooms(@RequestParam(required = false) String roomName) {
-        if(roomName != null) {
-            return service.getRoomsByName(roomName);
-        } else return service.getRooms();
+    @GetMapping
+    public Page<Room> getRooms(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "4") int size,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction
+    ) {
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortBy));
+
+        return service.getRooms(pageable);
     }
 
     @PutMapping("/{roomName}")
     public Room renameRoom(@PathVariable String roomName, @RequestParam String newName) {
-        service.renameRoom(roomName, newName);
-        return service.getRoom(newName);
+        return service.renameRoom(roomName, newName);
     }
 
     @DeleteMapping("/{roomName}")

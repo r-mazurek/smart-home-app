@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.smart_home.SmartHome.controllers.SseController;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -34,8 +36,8 @@ public class RoomService {
         return roomRepository.findByNameIgnoreCase(name);
     }
 
-    public List<Room> getRooms() {
-        return roomRepository.findAll();
+    public Page<Room> getRooms(Pageable pageable) {
+        return roomRepository.findAll(pageable);
     }
 
     public List<Room> getRoomsByName(String searchQuery) {
@@ -52,10 +54,13 @@ public class RoomService {
         roomRepository.save(room);
     }
 
-    public void renameRoom(String oldName, String newName){
+    public Room renameRoom(String oldName, String newName){
         Room room = roomRepository.findByNameIgnoreCase(oldName);
-        room.setName(newName);
-        roomRepository.save(room);
+        if (room != null) {
+            room.setName(newName);
+            return roomRepository.save(room);
+        }
+        return null;
     }
 
     public void deleteRoom(String roomName){

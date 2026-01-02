@@ -8,7 +8,7 @@ import Link from "next/link"
 
 export default function Home() {
     const dispatch = useAppDispatch();
-    const { items: rooms, status } = useAppSelector((state) => state.rooms);
+    const { items: rooms, status, pagination } = useAppSelector((state) => state.rooms);
     const [logs, setLogs] = useState<EventLog[]>([]);
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [newRoomName, setNewRoomName] = useState("");
@@ -23,7 +23,7 @@ export default function Home() {
     };
 
     const fetchData = async () => {
-        dispatch(fetchRooms());
+        dispatch(fetchRooms({ page: 0 }));
 
         try {
             const weatherRes = await fetch("http://localhost:8080/weather");
@@ -46,7 +46,7 @@ export default function Home() {
         eventSource.addEventListener("new-log", (event) => {
             const newLog: EventLog = JSON.parse(event.data);
             setLogs((prevLogs) => [newLog, ...prevLogs]);
-            dispatch(fetchRooms());
+            dispatch(fetchRooms({ page: 0 }));
         });
 
         eventSource.onerror = (err) => {
@@ -64,14 +64,20 @@ export default function Home() {
         if (!newRoomName) return;
         await fetch(`http://localhost:8080/rooms/${newRoomName}`, { method: "POST" });
         setNewRoomName("");
-        dispatch(fetchRooms());
+        dispatch(fetchRooms({ page: 0 }));
+    };
+
+    const handlePageChange = (newPage: number) => {
+        if (newPage >= 0 && newPage < pagination.totalPages) {
+            dispatch(fetchRooms({ page: newPage }));
+        }
     };
 
     const toggleDevice = async (roomName: string, deviceId: number) => {
         await fetch(`http://localhost:8080/rooms/${roomName}/devices/${deviceId}`, {
             method: "POST",
         });
-        dispatch(fetchRooms());
+        dispatch(fetchRooms({ page: 0 }));
     };
 
     return (
@@ -94,20 +100,14 @@ export default function Home() {
                 <div className="lg:col-span-2 space-y-6">
 
                     {/* Formularz dodawania */}
-                    <div className="bg-white p-4 rounded-xl shadow-sm flex gap-2">
-                        <input
-                            type="text"
-                            placeholder="Nazwa nowego pokoju..."
-                            className="border p-2 rounded flex-grow"
-                            value={newRoomName}
-                            onChange={(e) => setNewRoomName(e.target.value)}
-                        />
-                        <button
-                            onClick={handleAddRoom}
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded font-medium transition"
+                    <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center">
+                        <span className="text-gray-600 font-medium">Zarządzanie domem</span>
+                        <Link
+                            href="/rooms/add"
+                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition flex items-center gap-2"
                         >
-                            Dodaj
-                        </button>
+                            + Dodaj Pokój
+                        </Link>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -150,7 +150,30 @@ export default function Home() {
                             </div>
                         ))}
                     </div>
+                    {/* Paginacja */}
+                    <div className="mt-8 flex justify-center items-center gap-4">
+                        <button
+                            onClick={() => handlePageChange(pagination.currentPage - 1)}
+                            disabled={pagination.currentPage === 0}
+                            className="px-4 py-2 bg-white border rounded disabled:opacity-50 hover:bg-gray-50"
+                        >
+                            &larr; Poprzednia
+                        </button>
+
+                        <span className="text-gray-600">
+                Strona {pagination.currentPage + 1} z {pagination.totalPages}
+            </span>
+
+                        <button
+                            onClick={() => handlePageChange(pagination.currentPage + 1)}
+                            disabled={pagination.currentPage + 1 >= pagination.totalPages}
+                            className="px-4 py-2 bg-white border rounded disabled:opacity-50 hover:bg-gray-50"
+                        >
+                            Następna &rarr;
+                        </button>
+                    </div>
                 </div>
+
 
                 <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500 h-fit">
                     <h2 className="text-xl font-bold mb-4 text-gray-700">📜 Historia Zdarzeń</h2>

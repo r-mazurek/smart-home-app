@@ -62,9 +62,12 @@ export default function RoomDetailsPage() {
 
                 <div className="mt-8 border-t pt-6 flex gap-4">
                     {/* przyciski edycji */}
-                    <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition">
+                    <Link
+                        href={`/rooms/${id}/edit`}
+                        className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
+                    >
                         Edytuj Pokój
-                    </button>
+                    </Link>
                     <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
                         Usuń Pokój
                     </button>
