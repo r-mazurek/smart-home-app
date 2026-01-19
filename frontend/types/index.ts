@@ -14,6 +14,7 @@ export interface Device {
     name: string;
     isOn: boolean;
     deviceType?: string;
+    room?: Room;
 }
 
 export interface Room {

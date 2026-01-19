@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
-import { fetchRooms } from "@/lib/features/rooms/roomsSlice";
+import {addDeviceToRoom, deleteRoom, fetchRooms} from "@/lib/features/rooms/roomsSlice";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import DeviceForm from "@/components/DeviceForm";
 
 export default function RoomDetailsPage() {
     const { id } = useParams();
@@ -12,6 +13,27 @@ export default function RoomDetailsPage() {
     const dispatch = useAppDispatch();
 
     const { items: rooms, status } = useAppSelector((state) => state.rooms);
+    const [ showAddDevice, setShowAddDevice ] = useState(false);
+
+    const handleAddDevice = async (values: { name: string, deviceType: string }) => {
+        if (!room) return;
+
+        await dispatch(addDeviceToRoom({
+            roomName: room.name,
+            deviceName: values.name,
+            deviceType: values.deviceType
+        }));
+
+        setShowAddDevice(false);
+    };
+
+    const handleDelete = async () => {
+        if (!room) return;
+        if (confirm("Czy na pewno chcesz usunąć ten pokój i wszystkie jego urządzenia?")) {
+            await dispatch(deleteRoom(room.name));
+            router.push('/');
+        }
+    }
 
     const room = rooms.find((r) => r.id === Number(id));
 
@@ -39,8 +61,24 @@ export default function RoomDetailsPage() {
           </span>
                 </div>
 
-                {/* urzadzenia */}
-                <h2 className="text-xl font-semibold mb-4 text-gray-700">Urządzenia w pokoju</h2>
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-semibold text-gray-700">Urządzenia w pokoju</h2>
+
+                    {/* Przycisk otwierający formularz */}
+                    <button
+                        onClick={() => setShowAddDevice(!showAddDevice)}
+                        className="text-sm text-blue-600 hover:underline font-medium"
+                    >
+                        {showAddDevice ? "Anuluj" : "+ Dodaj urządzenie"}
+                    </button>
+                </div>
+
+                {/* warunkowe wyświetlanie formularza */}
+                {showAddDevice && (
+                    <div className="mb-6 animate-fade-in">
+                        <DeviceForm onSubmit={handleAddDevice} />
+                    </div>
+                )}
 
                 {room.devices.length === 0 ? (
                     <p className="text-gray-400">Brak urządzeń w tym pokoju.</p>
@@ -68,7 +106,7 @@ export default function RoomDetailsPage() {
                     >
                         Edytuj Pokój
                     </Link>
-                    <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+                    <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
                         Usuń Pokój
                     </button>
                 </div>

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Room, PageResponse } from '@/types';
+import { Room, Device, PageResponse } from '@/types';
+import {create} from "node:domain";
 
 interface RoomsState {
     items: Room[];
@@ -66,6 +67,29 @@ export const updateRoom = createAsyncThunk('rooms/updateRoom', async ({oldName, 
     return (await response.json()) as Room
 })
 
+export const addDeviceToRoom = createAsyncThunk(
+    'rooms/addDeviceToRoom',
+    async ({ roomName, deviceName, deviceType }: { roomName: string, deviceName: string, deviceType: string }) => {
+        const response = await fetch(`http://localhost:8080/rooms/${roomName}/devices?deviceType=${deviceType}&deviceName=${deviceName}`, {
+            method: 'POST',
+        });
+
+        if (!response.ok) throw new Error('Failed to add a new device')
+
+        const newDevice = await response.json()
+        return { roomName, newDevice };
+    }
+);
+
+export const deleteRoom = createAsyncThunk(
+    'rooms/deleteRoom',
+    async (name: string) => {
+        await fetch(`http://localhost:8080/rooms/${name}?sure=true`,
+        {method: "DELETE" });
+        return name;
+    }
+);
+
 const roomsSlice = createSlice({
     name: 'rooms',
     initialState,
@@ -100,6 +124,16 @@ const roomsSlice = createSlice({
                 if (index !== -1) {
                     state.items[index] = action.payload;
                 }
+            })
+            .addCase(addDeviceToRoom.fulfilled, (state, action) => {
+                const { roomName, newDevice } = action.payload;
+                const room = state.items.find(r => r.name === roomName);
+                if (room) {
+                    room.devices.push(newDevice as Device);
+                }
+            })
+            .addCase(deleteRoom.fulfilled, (state, action) => {
+                state.items = state.items.filter(room => room.name !== action.payload);
             });
     },
 });

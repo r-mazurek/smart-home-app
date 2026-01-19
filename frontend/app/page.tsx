@@ -126,6 +126,12 @@ export default function Home() {
         <main className="min-h-screen p-8 bg-gray-50 text-gray-800 font-sans">
             <h1 className="text-4xl font-bold mb-8 text-blue-600">🏠 Smart Home Dashboard</h1>
 
+            <div className="flex gap-4 mb-4">
+                <Link href="/devices" className="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 transition">
+                    🔌 Zobacz wszystkie urządzenia
+                </Link>
+            </div>
+
             {weather && (
                 <div className="bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-4">
                     <span className="text-4xl">{getWeatherIcon(weather.current_weather.weathercode)}</span>
@@ -157,6 +163,19 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {displayedRooms.map((room) => (
                             <div key={room.id || room.name} className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+
+                                {/* ZDJĘCIE - NOWOŚĆ */}
+                                <div className="h-32 bg-gray-200 relative">
+                                    <img
+                                        src={`https://picsum.photos/seed/${room.id}/400/200`}
+                                        alt={room.name}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                                    />
+                                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold shadow-sm">
+                                        ID: {room.id}
+                                    </div>
+                                </div>
+
                                 <div className="flex justify-between items-start mb-4">
                                     <Link href={`/rooms/${room.id}`} className="hover:text-blue-600 hover:underline">
                                         <h2 className="text-xl font-semibold text-gray-700">{room.name}</h2>
@@ -189,8 +208,6 @@ export default function Home() {
                                         ))}
                                     </ul>
                                 )}
-
-                                {/* DODAJ URZADZENIE TUTAJ */}
                             </div>
                         ))}
                     </div>
