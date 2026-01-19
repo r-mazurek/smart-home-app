@@ -36,8 +36,12 @@ public class RoomService {
         return roomRepository.findByNameIgnoreCase(name);
     }
 
-    public Page<Room> getRooms(Pageable pageable) {
-        return roomRepository.findAll(pageable);
+    public Page<Room> getRooms(String search, Pageable pageable) {
+        if (search == null || search.isEmpty()) {
+            return roomRepository.findAll(pageable);
+        }
+        return roomRepository.findByNameContainingIgnoreCase(search, pageable);
+
     }
 
     public List<Room> getRoomsByName(String searchQuery) {

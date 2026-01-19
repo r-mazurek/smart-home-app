@@ -25,8 +25,24 @@ const initialState: RoomsState = {
 
 export const fetchRooms = createAsyncThunk(
     'rooms/fetchRooms',
-    async ({ page = 0, size = 4 }: { page?: number; size?: number } = {}) => {
-        const response = await fetch(`http://localhost:8080/rooms?page=${page}&size=${size}&sortBy=name&direction=asc`);
+    async ({
+               page = 0,
+               size = 5,
+               sortBy = 'name',
+               direction = 'asc',
+               search = ''
+           }: {
+        page?: number;
+        size?: number;
+        sortBy?: string;
+        direction?: string;
+        search?: string; // Type def
+    } = {}) => {
+
+        const response = await fetch(
+            `http://localhost:8080/rooms?page=${page}&size=${size}&sortBy=${sortBy}&direction=${direction}&search=${search}`
+        );
+
         if (!response.ok) {
             throw new Error('Failed to fetch rooms');
         }

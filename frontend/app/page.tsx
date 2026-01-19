@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector} from "@/lib/hooks";
 import { fetchRooms} from "@/lib/features/rooms/roomsSlice";
 import { Room, EventLog, WeatherData } from "@/types";
 import Link from "next/link"
+import FilterBar from "@/components/FilterBar";
 
 export default function Home() {
     const dispatch = useAppDispatch();
@@ -20,6 +21,32 @@ export default function Home() {
         if (code >= 51 && code <= 67) return "🌧️";
         if (code >= 71 && code <= 77) return "❄️";
         return "🌡️";
+    };
+
+    const [queryParams, setQueryParams] = useState({
+        search: "",
+        sortBy: "name",
+        direction: "asc"
+    });
+
+    const [onlyActiveFilter, setOnlyActiveFilter] = useState(false);
+
+    const handleFilterChange = (filters: { search: string, sort: string, onlyActiveFilter: boolean }) => {
+        setQueryParams((prev) => ({
+            ...prev,
+            search: filters.search,
+            sortBy: filters.sort,
+        }));
+
+        setOnlyActiveFilter(filters.onlyActiveFilter);
+
+        dispatch(fetchRooms({
+            page: 0,
+            size: 4,
+            search: filters.search,
+            sortBy: filters.sort,
+            direction: "asc"
+        }));
     };
 
     const fetchData = async () => {
@@ -46,7 +73,12 @@ export default function Home() {
         eventSource.addEventListener("new-log", (event) => {
             const newLog: EventLog = JSON.parse(event.data);
             setLogs((prevLogs) => [newLog, ...prevLogs]);
-            dispatch(fetchRooms({ page: 0 }));
+            dispatch(fetchRooms({
+                page: 0,
+                size: 4,
+                search: queryParams.search,
+                sortBy: queryParams.sortBy
+            }));
         });
 
         eventSource.onerror = (err) => {
@@ -57,8 +89,12 @@ export default function Home() {
         return () => {
             eventSource.close();
         };
+// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    }, [dispatch]);
+    const displayedRooms = onlyActiveFilter
+        ? rooms.filter(room => room.devices.some(device == device.isOn))
+        : rooms;
 
     const handleAddRoom = async () => {
         if (!newRoomName) return;
@@ -69,7 +105,13 @@ export default function Home() {
 
     const handlePageChange = (newPage: number) => {
         if (newPage >= 0 && newPage < pagination.totalPages) {
-            dispatch(fetchRooms({ page: newPage }));
+            dispatch(fetchRooms({
+                page: newPage,
+                size: 4,
+                search: queryParams.search,
+                sortBy: queryParams.sortBy,
+                direction: queryParams.direction
+            }));
         }
     };
 
@@ -99,6 +141,8 @@ export default function Home() {
                 {/* KOLUMNA 1 i 2: POKOJE */}
                 <div className="lg:col-span-2 space-y-6">
 
+                    <FilterBar onFilterChange={handleFilterChange} />
+
                     {/* Formularz dodawania */}
                     <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center">
                         <span className="text-gray-600 font-medium">Zarządzanie domem</span>
@@ -111,7 +155,7 @@ export default function Home() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {rooms.map((room) => (
+                        {displayedRooms.map((room) => (
                             <div key={room.id || room.name} className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                                 <div className="flex justify-between items-start mb-4">
                                     <Link href={`/rooms/${room.id}`} className="hover:text-blue-600 hover:underline">
