@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect } from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchStats } from "@/lib/features/stats/statsSlice";
@@ -15,16 +15,9 @@ export default function StatsPage() {
     const dispatch = useAppDispatch();
     const { devicesPerRoom, deviceStatus, status } = useAppSelector((state) => state.stats);
 
-    const [isMounted, setIsMounted] = useState(false);
-
     useEffect(() => {
         dispatch(fetchStats());
-        setIsMounted(true);
     }, [dispatch]);
-
-    if(!isMounted) {
-        return null;
-    }
 
     return (
         <main className="min-h-screen p-8 bg-gray-50 text-gray-800 font-sans">

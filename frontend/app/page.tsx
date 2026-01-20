@@ -3,17 +3,17 @@
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector} from "@/lib/hooks";
 import { fetchRooms} from "@/lib/features/rooms/roomsSlice";
-import { Room, EventLog, WeatherData } from "@/types";
+import { EventLog, WeatherData } from "@/types";
 import Link from "next/link"
 import FilterBar from "@/components/FilterBar";
 import { toggleDevice} from "@/lib/features/devices/devicesSlice";
 import {addLog} from "@/lib/features/logs/logsSlice";
+import Image from "next/image";
 
 export default function Home() {
     const dispatch = useAppDispatch();
-    const { items: rooms, status, pagination } = useAppSelector((state) => state.rooms);
+    const { items: rooms, pagination } = useAppSelector((state) => state.rooms);
     const [weather, setWeather] = useState<WeatherData | null>(null);
-    const [newRoomName, setNewRoomName] = useState("");
     const logs = useAppSelector((state) => state.logs.items);
 
     const getWeatherIcon = (code: number) => {
@@ -98,13 +98,6 @@ export default function Home() {
         ? rooms.filter(room => room.devices.some((d) => d.isOn))
         : rooms;
 
-    const handleAddRoom = async () => {
-        if (!newRoomName) return;
-        await fetch(`http://localhost:8080/rooms/${newRoomName}`, { method: "POST" });
-        setNewRoomName("");
-        dispatch(fetchRooms({ page: 0 }));
-    };
-
     const handlePageChange = (newPage: number) => {
         if (newPage >= 0 && newPage < pagination.totalPages) {
             dispatch(fetchRooms({
@@ -164,7 +157,7 @@ export default function Home() {
 
                                 {/* ZDJĘCIE - NOWOŚĆ */}
                                 <div className="h-32 bg-gray-200 relative">
-                                    <img
+                                    <Image
                                         src={`https://picsum.photos/seed/${room.id}/400/200`}
                                         alt={room.name}
                                         className="w-full h-full object-cover group-hover:scale-105 transition duration-500"

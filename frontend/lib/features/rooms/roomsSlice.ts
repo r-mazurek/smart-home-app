@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Room, Device, PageResponse } from '@/types';
 import { toggleDevice} from "@/lib/features/devices/devicesSlice";
 
