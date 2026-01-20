@@ -6,6 +6,7 @@ import { fetchRooms} from "@/lib/features/rooms/roomsSlice";
 import { Room, EventLog, WeatherData } from "@/types";
 import Link from "next/link"
 import FilterBar from "@/components/FilterBar";
+import { toggleDevice} from "@/lib/features/devices/devicesSlice";
 
 export default function Home() {
     const dispatch = useAppDispatch();
@@ -93,7 +94,7 @@ export default function Home() {
     }, []);
 
     const displayedRooms = onlyActiveFilter
-        ? rooms.filter(room => room.devices.some(device == device.isOn))
+        ? rooms.filter(room => room.devices.some((d) => d.isOn))
         : rooms;
 
     const handleAddRoom = async () => {
@@ -115,20 +116,16 @@ export default function Home() {
         }
     };
 
-    const toggleDevice = async (roomName: string, deviceId: number) => {
-        await fetch(`http://localhost:8080/rooms/${roomName}/devices/${deviceId}`, {
-            method: "POST",
-        });
-        dispatch(fetchRooms({ page: 0 }));
-    };
-
     return (
         <main className="min-h-screen p-8 bg-gray-50 text-gray-800 font-sans">
             <h1 className="text-4xl font-bold mb-8 text-blue-600">🏠 Smart Home Dashboard</h1>
 
             <div className="flex gap-4 mb-4">
                 <Link href="/devices" className="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 transition">
-                    🔌 Zobacz wszystkie urządzenia
+                    🔌 Urządzenia
+                </Link>
+                <Link href="/stats" className="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 transition">
+                    📊 Statystyki
                 </Link>
             </div>
 
@@ -193,9 +190,7 @@ export default function Home() {
                           {device.name}
                         </span>
                                                 <button
-                                                    onClick={() => {
-                                                        toggleDevice(room.name, device.id)
-                                                    }}
+                                                    onClick={() => dispatch(toggleDevice(device.id))}
                                                     className={`px-4 py-1 rounded text-sm transition ${
                                                         device.isOn
                                                             ? "bg-green-100 text-green-700 hover:bg-green-200"

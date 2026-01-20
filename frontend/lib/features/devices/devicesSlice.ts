@@ -33,6 +33,17 @@ export const fetchDevices = createAsyncThunk(
     }
 );
 
+export const toggleDevice = createAsyncThunk(
+    'devices/toggleDevice',
+    async (id: number) => {
+        const response = await fetch(`http://localhost:8080/devices/${id}/toggle`, {
+            method: 'POST',
+        });
+        if (!response.ok) throw new Error("Failed to toggle device");
+        return (await response.json()) as Device;
+    }
+);
+
 interface DevicesState {
     items: Device[];
     pagination: { currentPage: number, totalPages: number, totalElements: number };
@@ -63,7 +74,13 @@ const devicesSlice = createSlice({
             })
             .addCase(fetchDevices.rejected, (state) => {
                 state.status = "failed";
-        });
+            })
+            .addCase(toggleDevice.fulfilled, (state, action) => {
+                const index = state.items.findIndex(d => d.id === action.payload.id);
+                if (index != -1) {
+                    state.items[index] = action.payload;
+                }
+            });
     },
 });
 

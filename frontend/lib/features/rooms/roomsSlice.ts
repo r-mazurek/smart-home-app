@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Room, Device, PageResponse } from '@/types';
-import {create} from "node:domain";
+import { toggleDevice} from "@/lib/features/devices/devicesSlice";
 
 interface RoomsState {
     items: Room[];
@@ -134,6 +134,27 @@ const roomsSlice = createSlice({
             })
             .addCase(deleteRoom.fulfilled, (state, action) => {
                 state.items = state.items.filter(room => room.name !== action.payload);
+            })
+            .addCase(toggleDevice.fulfilled, (state, action) => {
+                const updatedDevice = action.payload;
+
+                for (let i = 0; i < state.items.length; i++) {
+                    const room = state.items[i];
+
+                    if (!room.devices || !Array.isArray(room.devices)) continue;
+
+                    const deviceIndex = room.devices.findIndex(d => d.id === updatedDevice.id);
+
+                    if (deviceIndex !== -1) {
+                        state.items[i].devices[deviceIndex].isOn = updatedDevice.isOn;
+
+                        if (updatedDevice.temperature !== undefined) {
+                            state.items[i].devices[deviceIndex].temperature = updatedDevice.temperature;
+                        }
+
+                        break;
+                    }
+                }
             });
     },
 });

@@ -15,6 +15,7 @@ export interface Device {
     isOn: boolean;
     deviceType?: string;
     room?: Room;
+    temperature?: number;
 }
 
 export interface Room {

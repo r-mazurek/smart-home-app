@@ -3,7 +3,7 @@
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { fetchDevices } from "@/lib/features/devices/devicesSlice";
+import { fetchDevices, toggleDevice } from "@/lib/features/devices/devicesSlice";
 import FilterBar from "@/components/FilterBar";
 
 export default function DevicesPage() {
@@ -78,9 +78,16 @@ export default function DevicesPage() {
                             <td className="p-4 font-medium">{device.name}</td>
                             <td className="p-4 text-sm text-gray-500 uppercase">{device.deviceType}</td>
                             <td className="p-4">
-                  <span className={`px-2 py-1 rounded text-xs font-bold ${device.isOn ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
-                    {device.isOn ? "ON" : "OFF"}
-                  </span>
+                                <button
+                                    onClick={() => dispatch(toggleDevice(device.id))}
+                                    className={`px-3 py-1 rounded text-xs font-bold transition ${
+                                        device.isOn
+                                            ? "bg-green-100 text-green-700 hover:bg-green-200"
+                                            : "bg-red-100 text-red-700 hover:bg-red-200"
+                                    }`}
+                                >
+                                    {device.isOn ? "ON" : "OFF"}
+                                </button>
                             </td>
                             <td className="p-4">
                                 {device.room ? (
