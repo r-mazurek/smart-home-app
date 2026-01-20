@@ -1,26 +1,53 @@
 "use client";
 
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchDevices } from "@/lib/features/devices/devicesSlice";
+import FilterBar from "@/components/FilterBar";
 
 export default function DevicesPage() {
     const dispatch = useAppDispatch();
     const { items: devices, status, pagination } = useAppSelector((state) => state.devices);
 
-    useEffect(() => {
-        dispatch(fetchDevices({ page: 0 }));
-    }, [dispatch]);
+    const [queryParams, setQueryParams] = useState({
+        search: "",
+        sort: "name",
+        onlyActive: false
+    })
 
-    console.log("Status: ", status);
-    console.log("Devices: ", devices);
+    useEffect(() => {
+        dispatch(fetchDevices({
+            page: 0,
+            size: 10,
+            search: queryParams.search,
+            sortBy: queryParams.sort,
+            direction: "asc"
+        }));
+    }, [dispatch, queryParams.search, queryParams.sort]);
 
     const handlePageChange = (newPage: number) => {
         if (newPage >= 0 && newPage < pagination.totalPages) {
-            dispatch(fetchDevices({ page: newPage }));
+            dispatch(fetchDevices({
+                page: newPage,
+                size: 10,
+                search: queryParams.search,
+                sortBy: queryParams.sort
+            }));
         }
     };
+
+    const handleFilterChange = (filters: {
+        search: string,
+        sort: string,
+        onlyActive: boolean
+    }) => {
+        setQueryParams(filters);
+    }
+
+    const displayedDevices = queryParams.onlyActive
+        ? devices.filter(device => device.isOn)
+        : devices;
 
     return (
         <main className="min-h-screen p-8 bg-gray-50 text-gray-800">
@@ -30,6 +57,8 @@ export default function DevicesPage() {
                     <h1 className="text-3xl font-bold text-blue-600 mt-2">🔌 Wszystkie Urządzenia</h1>
                 </div>
             </div>
+
+            <FilterBar onFilterChange={handleFilterChange} />
 
             {status === 'loading' && <p>Ładowanie urządzeń...</p>}
 

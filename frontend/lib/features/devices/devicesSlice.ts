@@ -3,8 +3,31 @@ import { Device, PageResponse } from '@/types';
 
 export const fetchDevices = createAsyncThunk(
     'devices/fetchDevices',
-    async ({ page = 0, size = 10 }: {page?: number, size?: number } = {}) => {
-        const response = await fetch(`http://localhost:8080/devices?page=${page}&size=${size}`);
+    async ({
+               page = 0,
+               size = 10,
+               search = "",
+               sortBy = "name",
+               direction = "asc"
+    }: {page?: number;
+        size?: number;
+        search?: string;
+        sortBy?: string;
+        direction?: string;} = {}) => {
+
+        const params = new URLSearchParams({
+            page: page.toString(),
+            size: size.toString(),
+            sortBy: sortBy.toString(),
+            direction: direction.toString(),
+        });
+
+        if (search) {
+            params.append("search", search)
+        }
+
+        const response = await fetch(`http://localhost:8080/devices?${params.toString()}`);
+
         if (!response.ok) throw new Error('Failed to fetch devices');
         return (await response.json()) as PageResponse<Device>;
     }
