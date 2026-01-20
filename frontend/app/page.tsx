@@ -7,13 +7,14 @@ import { Room, EventLog, WeatherData } from "@/types";
 import Link from "next/link"
 import FilterBar from "@/components/FilterBar";
 import { toggleDevice} from "@/lib/features/devices/devicesSlice";
+import {addLog} from "@/lib/features/logs/logsSlice";
 
 export default function Home() {
     const dispatch = useAppDispatch();
     const { items: rooms, status, pagination } = useAppSelector((state) => state.rooms);
-    const [logs, setLogs] = useState<EventLog[]>([]);
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [newRoomName, setNewRoomName] = useState("");
+    const logs = useAppSelector((state) => state.logs.items);
 
     const getWeatherIcon = (code: number) => {
         if (code === 0) return "☀️";
@@ -73,7 +74,7 @@ export default function Home() {
 
         eventSource.addEventListener("new-log", (event) => {
             const newLog: EventLog = JSON.parse(event.data);
-            setLogs((prevLogs) => [newLog, ...prevLogs]);
+            dispatch(addLog(newLog));
             dispatch(fetchRooms({
                 page: 0,
                 size: 4,
@@ -186,9 +187,15 @@ export default function Home() {
                                     <ul className="space-y-3">
                                         {room.devices.map((device) => (
                                             <li key={device.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
-                        <span className={device.isOn ? "font-bold text-green-600" : "text-gray-500"}>
-                          {device.name}
-                        </span>
+                                                <span className={device.isOn ? "font-bold text-green-600" : "text-gray-500"}>
+                                                  {device.name}
+                                                </span>
+                                                {device.temperature !== undefined && device.temperature !== null && device.isOn && (
+                                                    <span className="text-xs font-mono bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                                                        {device.temperature}°C
+                                                    </span>
+                                                )}
+
                                                 <button
                                                     onClick={() => dispatch(toggleDevice(device.id))}
                                                     className={`px-4 py-1 rounded text-sm transition ${

@@ -85,7 +85,7 @@ export default function RoomDetailsPage() {
                 ) : (
                     <ul className="space-y-3">
                         {room.devices.map((device) => (
-                            <li key={device.id} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border">
+                            <li key={device.id || `temp-${index}`} className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border">
                                 <span className="font-medium text-lg">{device.name}</span>
                                 <span className={`px-3 py-1 rounded-full text-sm font-bold ${
                                     device.isOn ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-600"

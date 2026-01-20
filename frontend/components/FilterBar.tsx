@@ -3,20 +3,20 @@
 import { useState, useEffect } from "react";
 
 interface FilterBarProps {
-    onFilterChange: (filters: { search: string; sort: string; onlyActive: boolean }) => void;
+    onFilterChange: (filters: { search: string; sort: string; onlyActiveFilter: boolean }) => void;
 }
 
 export default function FilterBar({ onFilterChange }: FilterBarProps) {
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("name");
-    const [onlyActive, setOnlyActive] = useState(false);
+    const [onlyActiveFilter, setOnlyActiveFilter] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            onFilterChange({ search, sort, onlyActive });
+            onFilterChange({ search, sort, onlyActiveFilter });
         }, 500);
         return () => clearTimeout(timer);
-    }, [search, sort, onlyActive, onFilterChange]);
+    }, [search, sort, onlyActiveFilter, onFilterChange]);
 
     return (
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 flex flex-wrap gap-4 items-center">
@@ -48,8 +48,8 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
                 <input
                     type="checkbox"
                     id="activeFilter"
-                    checked={onlyActive}
-                    onChange={(e) => setOnlyActive(e.target.checked)}
+                    checked={onlyActiveFilter}
+                    onChange={(e) => setOnlyActiveFilter(e.target.checked)}
                     className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                 />
                 <label htmlFor="activeFilter" className="text-sm text-gray-700 cursor-pointer select-none">

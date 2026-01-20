@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchStats } from "@/lib/features/stats/statsSlice";
@@ -15,9 +15,16 @@ export default function StatsPage() {
     const dispatch = useAppDispatch();
     const { devicesPerRoom, deviceStatus, status } = useAppSelector((state) => state.stats);
 
+    const [isMounted, setIsMounted] = useState(false);
+
     useEffect(() => {
         dispatch(fetchStats());
+        setIsMounted(true);
     }, [dispatch]);
+
+    if(!isMounted) {
+        return null;
+    }
 
     return (
         <main className="min-h-screen p-8 bg-gray-50 text-gray-800 font-sans">
@@ -34,8 +41,8 @@ export default function StatsPage() {
 
                 <div className="bg-white p-6 rounded-xl shadow border border-gray-100">
                     <h2 className="text-xl font-semibold mb-6 text-gray-700">Urządzenia w pokojach</h2>
-                    <div className="h-80 w-full">
-                        <ResponsiveContainer width="100%" height="100%">
+                    <div style={{ width: '100%', height: 320 }}>
+                        <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={100}>
                             <BarChart data={devicesPerRoom}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="name" />
@@ -50,8 +57,8 @@ export default function StatsPage() {
 
                 <div className="bg-white p-6 rounded-xl shadow border border-gray-100">
                     <h2 className="text-xl font-semibold mb-6 text-gray-700">Status urządzeń</h2>
-                    <div className="h-80 w-full">
-                        <ResponsiveContainer width="100%" height="100%">
+                    <div style={{ width: '100%', height: 320 }}>
+                        <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={100}>
                             <PieChart>
                                 <Pie
                                     data={deviceStatus}

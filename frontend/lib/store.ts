@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import roomsReducer from './features/rooms/roomsSlice';
 import devicesReducer from './features/devices/devicesSlice';
 import statsReducer from './features/stats/statsSlice';
+import logsReducer from "@/lib/features/logs/logsSlice";
 
 export const makeStore = () => {
     return configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () => {
             rooms: roomsReducer,
             devices: devicesReducer,
             stats: statsReducer,
+            logs: logsReducer,
             // tutaj logs: logsReducer, weather: weatherReducer
         },
     });

@@ -13,7 +13,7 @@ export default function DevicesPage() {
     const [queryParams, setQueryParams] = useState({
         search: "",
         sort: "name",
-        onlyActive: false
+        onlyActiveFilter: false
     })
 
     useEffect(() => {
@@ -40,12 +40,12 @@ export default function DevicesPage() {
     const handleFilterChange = (filters: {
         search: string,
         sort: string,
-        onlyActive: boolean
+        onlyActiveFilter: boolean
     }) => {
         setQueryParams(filters);
     }
 
-    const displayedDevices = queryParams.onlyActive
+    const displayedDevices = queryParams.onlyActiveFilter
         ? devices.filter(device => device.isOn)
         : devices;
 
@@ -73,9 +73,17 @@ export default function DevicesPage() {
                     </tr>
                     </thead>
                     <tbody>
-                    {devices.map((device) => (
+                    {displayedDevices.map((device) => (
                         <tr key={device.id} className="border-b last:border-0 hover:bg-gray-50">
-                            <td className="p-4 font-medium">{device.name}</td>
+                            <td className="p-4 font-medium">
+                                {device.name}
+                                {device.temperature !== undefined && device.temperature !== null && device.isOn && (
+                                    <span className="ml-2 text-xs font-mono bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                                      {device.temperature}°C
+                                    </span>
+                                )}
+                            </td>
+
                             <td className="p-4 text-sm text-gray-500 uppercase">{device.deviceType}</td>
                             <td className="p-4">
                                 <button
