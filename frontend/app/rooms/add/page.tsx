@@ -5,7 +5,6 @@ import { useAppDispatch } from "@/lib/hooks";
 import { addRoom } from "@/lib/features/rooms/roomsSlice";
 import { useRouter } from "next/navigation";
 import {useLanguage} from "@/context/LanguageContext";
-import languageSwitcher from "@/components/LanguageSwitcher";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function AddRoomPage() {
