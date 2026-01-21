@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import {useLanguage} from "@/context/LanguageContext";
 
 interface FilterBarProps {
     onFilterChange: (filters: { search: string; sort: string; onlyActiveFilter: boolean }) => void;
@@ -10,6 +11,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("name");
     const [onlyActiveFilter, setOnlyActiveFilter] = useState(false);
+    const { t } = useLanguage();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -25,7 +27,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
                 <label className="text-xs text-gray-500 font-medium mb-1">Szukaj</label>
                 <input
                     type="text"
-                    placeholder="Nazwa..."
+                    placeholder={t.searchPlaceholder}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="border p-2 rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
@@ -33,14 +35,14 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
             </div>
 
             <div className="flex flex-col">
-                <label className="text-xs text-gray-500 font-medium mb-1">Sortowanie</label>
+                <label className="text-xs text-gray-500 font-medium mb-1">{t.sortBy}</label>
                 <select
                     value={sort}
                     onChange={(e) => setSort(e.target.value)}
                     className="border p-2 rounded text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                    <option value="name">Alfabetycznie (A-Z)</option>
-                    <option value="id">Po ID (Najnowsze)</option>
+                    <option value="name">{t.sortAlpha} (A-Z)</option>
+                    <option value="id">ID ({t.sortNewest})</option>
                 </select>
             </div>
 
@@ -53,7 +55,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
                     className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                 />
                 <label htmlFor="activeFilter" className="text-sm text-gray-700 cursor-pointer select-none">
-                    Tylko aktywne
+                    {t.onlyActive}
                 </label>
             </div>
 

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Room, Device, PageResponse } from '@/types';
 import { toggleDevice} from "@/lib/features/devices/devicesSlice";
+import { deleteDevice, renameDevice } from "@/lib/features/devices/devicesSlice";
 
 interface RoomsState {
     items: Room[];
@@ -155,6 +156,24 @@ const roomsSlice = createSlice({
                         break;
                     }
                 }
+            })
+            .addCase(deleteDevice.fulfilled, (state, action) => {
+                state.items.forEach(room => {
+                    if (room.devices) {
+                        room.devices = room.devices.filter(d => d.id !== action.payload);
+                    }
+                });
+            })
+            .addCase(renameDevice.fulfilled, (state, action) => {
+                const updated = action.payload;
+                state.items.forEach(room => {
+                    if (room.devices) {
+                        const index = room.devices.findIndex(d => d.id === updated.id);
+                        if (index !== -1) {
+                            room.devices[index] = updated;
+                        }
+                    }
+                });
             });
     },
 });

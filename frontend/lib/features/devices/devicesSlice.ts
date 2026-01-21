@@ -44,6 +44,25 @@ export const toggleDevice = createAsyncThunk(
     }
 );
 
+export const deleteDevice = createAsyncThunk(
+    'devices/deleteDevice',
+    async (id: number) => {
+        await fetch(`http://localhost:8080/devices/${id}`, { method: 'DELETE' });
+        return id;
+    }
+);
+
+export const renameDevice = createAsyncThunk(
+    'devices/renameDevice',
+    async ({ id, newName }: { id: number; newName: string }) => {
+        const response = await fetch(`http://localhost:8080/devices/${id}?name=${newName}`, {
+            method: 'PATCH',
+        });
+        if (!response.ok) throw new Error("Failed to rename");
+        return (await response.json()) as Device;
+    }
+);
+
 interface DevicesState {
     items: Device[];
     pagination: { currentPage: number, totalPages: number, totalElements: number };
@@ -78,6 +97,15 @@ const devicesSlice = createSlice({
             .addCase(toggleDevice.fulfilled, (state, action) => {
                 const index = state.items.findIndex(d => d.id === action.payload.id);
                 if (index != -1) {
+                    state.items[index] = action.payload;
+                }
+            })
+            .addCase(deleteDevice.fulfilled, (state, action) => {
+                state.items = state.items.filter(d => d.id !== action.payload);
+            })
+            .addCase(renameDevice.fulfilled, (state, action) => {
+                const index = state.items.findIndex(d => d.id === action.payload.id);
+                if (index !== -1) {
                     state.items[index] = action.payload;
                 }
             });

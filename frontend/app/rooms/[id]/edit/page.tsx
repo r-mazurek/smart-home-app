@@ -5,6 +5,8 @@ import RoomForm from "@/components/RoomForm";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchRooms, updateRoom } from "@/lib/features/rooms/roomsSlice";
 import { useRouter, useParams } from "next/navigation";
+import {useLanguage} from "@/context/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function EditRoomPage() {
     const { id } = useParams();
@@ -13,6 +15,8 @@ export default function EditRoomPage() {
 
     const { items: rooms, status } = useAppSelector((state) => state.rooms);
     const roomToEdit = rooms.find((r) => r.id === Number(id));
+
+    const { t } = useLanguage();
 
     useEffect(() => {
         if (status === 'idle') {
@@ -31,17 +35,19 @@ export default function EditRoomPage() {
         router.push("/");
     };
 
-    if (status === 'loading') return <div>Ładowanie...</div>;
-    if (!roomToEdit) return <div>Nie znaleziono pokoju!</div>;
+    if (status === 'loading') return <div>{t.loading}</div>;
+    if (!roomToEdit) return <div>{t.roomNotFound}</div>;
 
     return (
         <main className="min-h-screen p-8 bg-gray-50 flex flex-col items-center">
-            <h1 className="text-2xl font-bold mb-6">Edytuj Pokój: {roomToEdit.name}</h1>
+            <LanguageSwitcher />
+
+            <h1 className="text-2xl font-bold mb-6">{t.editRoom}: {roomToEdit.name}</h1>
             <div className="w-full max-w-md">
                 <RoomForm
                     initialValues={{ name: roomToEdit.name }}
                     onSubmit={handleUpdate}
-                    submitLabel="Zapisz Zmiany"
+                    submitLabel={t.saveChanges}
                 />
             </div>
         </main>

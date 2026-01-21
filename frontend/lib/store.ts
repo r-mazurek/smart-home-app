@@ -11,7 +11,6 @@ export const makeStore = () => {
             devices: devicesReducer,
             stats: statsReducer,
             logs: logsReducer,
-            // tutaj logs: logsReducer, weather: weatherReducer
         },
     });
 };
