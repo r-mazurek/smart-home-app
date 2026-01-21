@@ -42,7 +42,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
                     className="border p-2 rounded text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-none"
                 >
                     <option value="name">{t.sortAlpha} (A-Z)</option>
-                    <option value="id">ID ({t.sortNewest})</option>
+                    <option value="id">ID ({t.sortOldest})</option>
                 </select>
             </div>
 

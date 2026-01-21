@@ -40,7 +40,7 @@ export default function RoomForm({ initialValues, onSubmit, submitLabel }: RoomF
                             <Field
                                 type="text"
                                 name="name"
-                                className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
+                                className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-300 text-gray-700"
                                 placeholder={t.roomSearchPlaceholder}
                             />
                             <ErrorMessage name="name" component="div" className="text-red-500 text-xs mt-1" />

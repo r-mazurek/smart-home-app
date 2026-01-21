@@ -42,7 +42,7 @@ export default function EditRoomPage() {
         <main className="min-h-screen p-8 bg-gray-50 flex flex-col items-center">
             <LanguageSwitcher />
 
-            <h1 className="text-2xl font-bold mb-6">{t.editRoom}: {roomToEdit.name}</h1>
+            <h1 className="text-2xl font-bold mb-6 text-gray-700">{t.editRoom}: {roomToEdit.name}</h1>
             <div className="w-full max-w-md">
                 <RoomForm
                     initialValues={{ name: roomToEdit.name }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector} from "@/lib/hooks";
 import { fetchRooms} from "@/lib/features/rooms/roomsSlice";
 import { EventLog, WeatherData } from "@/types";
@@ -36,6 +36,14 @@ export default function Home() {
 
     const [onlyActiveFilter, setOnlyActiveFilter] = useState(false);
 
+    const paginationRef = useRef(pagination);
+    const queryParamsRef = useRef(queryParams);
+
+    useEffect(() => {
+        paginationRef.current = pagination;
+        queryParamsRef.current = queryParams;
+    }, [pagination, queryParams]);
+
     const handleFilterChange = (filters: { search: string, sort: string, onlyActiveFilter: boolean }) => {
         setQueryParams((prev) => ({
             ...prev,
@@ -46,7 +54,7 @@ export default function Home() {
         setOnlyActiveFilter(filters.onlyActiveFilter);
 
         dispatch(fetchRooms({
-            page: 0,
+            page: paginationRef.current.currentPage,
             size: 4,
             search: filters.search,
             sortBy: filters.sort,
@@ -79,7 +87,7 @@ export default function Home() {
             const newLog: EventLog = JSON.parse(event.data);
             dispatch(addLog(newLog));
             dispatch(fetchRooms({
-                page: 0,
+                page: paginationRef.current.currentPage,
                 size: 4,
                 search: queryParams.search,
                 sortBy: queryParams.sortBy

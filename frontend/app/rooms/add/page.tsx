@@ -22,7 +22,7 @@ export default function AddRoomPage() {
         <main className="min-h-screen p-8 bg-gray-50 flex flex-col items-center">
             <LanguageSwitcher />
 
-            <h1 className="text-2xl font-bold mb-6">{t.addRoom}</h1>
+            <h1 className="text-2xl font-bold mb-6 text-gray-700">{t.addRoom}</h1>
             <div className="w-full max-w-md">
                 <RoomForm
                     initialValues={{ name: "" }}

@@ -39,14 +39,13 @@ export default function DeviceForm({ onSubmit }: DeviceFormProps) {
                             <Field
                                 name="name"
                                 placeholder={t.namePlaceholder}
-                                className="w-full border p-2 rounded text-sm focus:border-blue-500 outline-none"
+                                className="w-full border p-2 rounded text-sm focus:border-blue-500 outline-none placeholder-gray-300 text-gray-700"
                             />
                             <ErrorMessage name="name" component="div" className="text-red-500 text-xs mt-1" />
                         </div>
 
-                        {/* Typ (Dropdown) */}
                         <div>
-                            <Field as="select" name="deviceType" className="w-full border p-2 rounded text-sm bg-white">
+                            <Field as="select" name="deviceType" className="w-full border p-2 rounded text-sm bg-white text-gray-700">
                                 <option value="lightBulb">💡 {t.lightBulb}</option>
                                 <option value="thermostat">🌡️ {t.thermostat}</option>
                             </Field>

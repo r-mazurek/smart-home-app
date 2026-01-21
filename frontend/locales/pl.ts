@@ -26,7 +26,7 @@ export const pl = {
     onlyActive: "Tylko włączone",
     sortBy: "Sortuj wg",
     sortAlpha: "Alfabetycznie",
-    sortNewest: "Najnowsze",
+    sortOldest: "Najstarsze",
 
     // Akcje i Statusy
     on: "WŁ",

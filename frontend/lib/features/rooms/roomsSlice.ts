@@ -38,7 +38,7 @@ export const fetchRooms = createAsyncThunk(
         size?: number;
         sortBy?: string;
         direction?: string;
-        search?: string; // Type def
+        search?: string;
     } = {}) => {
 
         const response = await fetch(

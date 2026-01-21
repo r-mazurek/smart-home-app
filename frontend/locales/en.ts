@@ -23,7 +23,7 @@ export const en = {
     onlyActive: "Active only",
     sortBy: "Sort by",
     sortAlpha: "Alphabetical",
-    sortNewest: "Newest",
+    sortOldest: "Oldest",
 
     on: "ON",
     off: "OFF",
