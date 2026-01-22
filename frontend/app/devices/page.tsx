@@ -44,9 +44,9 @@ export default function DevicesPage() {
         search: string,
         sort: string,
         onlyActiveFilter: boolean
-    }) => {
+        }) => {
         setQueryParams(filters);
-    }
+    };
 
     const displayedDevices = queryParams.onlyActiveFilter
         ? devices.filter(device => device.isOn)
@@ -100,8 +100,8 @@ export default function DevicesPage() {
                                         ${device.isOn
                                         ? "bg-gradient-to-r from-green-400 to-green-500 text-white shadow-[0_4px_12px_rgba(34,197,94,0.3)] hover:shadow-[0_6px_16px_rgba(34,197,94,0.4)]"
                                         : "bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 hover:text-gray-700 hover:border-gray-400"
-                                    }
-        `}
+                                        }
+        `                           }
                                 >
                                     {device.isOn ? "ON" : "OFF"}
                                 </button>

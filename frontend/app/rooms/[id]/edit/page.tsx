@@ -14,6 +14,7 @@ export default function EditRoomPage() {
     const dispatch = useAppDispatch();
 
     const { items: rooms, status } = useAppSelector((state) => state.rooms);
+
     const roomToEdit = rooms.find((r) => r.id === Number(id));
 
     const { t } = useLanguage();

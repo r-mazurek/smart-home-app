@@ -44,7 +44,11 @@ export default function Home() {
         queryParamsRef.current = queryParams;
     }, [pagination, queryParams]);
 
-    const handleFilterChange = (filters: { search: string, sort: string, onlyActiveFilter: boolean }) => {
+    const handleFilterChange = (
+        filters: {
+            search: string,
+            sort: string,
+            onlyActiveFilter: boolean }) => {
         setQueryParams((prev) => ({
             ...prev,
             search: filters.search,
@@ -68,7 +72,7 @@ export default function Home() {
         try {
             const weatherRes = await fetch("http://localhost:8080/weather");
             if (weatherRes.ok) {
-                const weatherData = await weatherRes.json();
+                const weatherData: WeatherData = await weatherRes.json();
                 setWeather(weatherData);
             }
         } catch (error) {
@@ -102,7 +106,7 @@ export default function Home() {
         return () => {
             eventSource.close();
         };
-// eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const displayedRooms = onlyActiveFilter
@@ -176,6 +180,7 @@ export default function Home() {
                                         width={400}
                                         height={200}
                                         className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                                        loading="eager"
                                     />
                                     <div className="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold shadow-sm">
                                         ID: {room.id}
@@ -212,8 +217,8 @@ export default function Home() {
                                                         ${device.isOn
                                                         ? "bg-gradient-to-r from-green-400 to-green-500 text-white shadow-[0_4px_12px_rgba(34,197,94,0.3)] hover:shadow-[0_6px_16px_rgba(34,197,94,0.4)]"
                                                         : "bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 hover:text-gray-700 hover:border-gray-400"
-                                                    }
-    `}
+                                                        }
+    `                                               }
                                                 >
                                                     {device.isOn ? (t ? t.on : "ON") : (t ? t.off : "OFF")}
                                                 </button>
@@ -235,8 +240,8 @@ export default function Home() {
                         </button>
 
                         <span className="text-gray-600">
-                {t.page} {pagination.currentPage + 1} {t.of} {pagination.totalPages}
-            </span>
+                            {t.page} {pagination.currentPage + 1} {t.of} {pagination.totalPages}
+                        </span>
 
                         <button
                             onClick={() => handlePageChange(pagination.currentPage + 1)}
@@ -264,7 +269,6 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
-
             </div>
         </main>
     );

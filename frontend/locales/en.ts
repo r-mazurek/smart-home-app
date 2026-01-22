@@ -54,6 +54,7 @@ export const en = {
     noConnectedRoom: "No Room Connected",
     minTwoCharacters: "The name should be at least two characters",
     maxTwentyCharacters: "The name cannot be longer than 20 characters",
+    nameRequired: "A name is required",
     roomNameRequired: "A room name is required",
     typeRequired: "Specifying type is required",
     sureWantToDeleteRoomMessage: "Are you sure you want to delete this room and all of its devices?",
