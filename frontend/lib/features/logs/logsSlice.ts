@@ -19,11 +19,8 @@ const logsSlice = createSlice({
                 state.items.pop()
             }
         },
-        ckearLogs: (state) => {
-            state.items = [];
-        }
     },
 });
 
-export const { addLog, ckearLogs } = logsSlice.actions;
+export const { addLog } = logsSlice.actions;
 export default logsSlice.reducer;

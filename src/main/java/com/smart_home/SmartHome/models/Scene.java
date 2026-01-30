@@ -40,13 +40,13 @@ public class Scene {
         switch (device) {
             case LightBulb bulb -> {
                 if (!bulb.isOn()) { bulb.toggle(); }
-                bulb.dim(0.2f);
+                bulb.dim(25);
             }
             case Thermostat thermostat -> {
                 if (!thermostat.isOn()) { thermostat.toggle(); }
-                if (thermostat.getTargetTemperature() < 20.0f){
+                if (thermostat.getTemperature() < 20.0f){
                     thermostat.setTargetTemperature(
-                            thermostat.getTargetTemperature() + 2.0f
+                            thermostat.getTemperature() + 2.0f
                     );
                 }
             }

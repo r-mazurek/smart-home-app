@@ -1,6 +1,6 @@
 package com.smart_home.SmartHome.models;
 
-import com.smart_home.SmartHome.models.Device;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -14,45 +14,30 @@ public class Room {
     private Long id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private final List<Device> devices = new ArrayList<>();
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Device> devices = new ArrayList<>();
 
     public Room() {}
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", devices=" + devices +
-                '}';
-    }
+    public Long getId() { return id; }
 
-    public void setName(String newName) {
-        this.name = newName;
-    }
+    public String getName() { return name; }
+    public void setName(String newName) { this.name = newName; }
 
-    public String  getName() {
-        return name;
-    }
+    public List<Device> getDevices() { return devices; }
 
-    public Long getId() {
-        return id;
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
     }
-
-    public void setDevices(List<Device> devices) {}
 
     public void addDevice(Device device) {
+        device.setRoom(this);
         devices.add(device);
-    }
-
-    public List<Device> getDevices() {
-        return devices;
     }
 
     public List<Device> getDevicesByName(String nameQuery) {
         return devices.stream()
-                .filter(device -> device.getName().contains(nameQuery))
+                .filter(device -> device.getName() != null && device.getName().contains(nameQuery))
                 .collect(Collectors.toList());
     }
 
@@ -63,23 +48,20 @@ public class Room {
     }
 
     public Device getDeviceById(long id) {
-        for (Device d : devices) {
-            if (d.getId() == id) {
-                return d;
-            }
-        }
-        return null;
+        return devices.stream()
+                .filter(d -> d.getId() != null && d.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean deleteDevice(long deviceId) {
         Device device = getDeviceById(deviceId);
-        return devices.remove(device);
+        return device != null && devices.remove(device);
     }
 
     public void applyScene(Scene scene) {
         for (String deviceType : scene.getDeviceTypeAffected()) {
             List<Device> devicesAffected = getDevicesByType(deviceType);
-
             for (Device device : devicesAffected) {
                 scene.affectDevice(device);
             }

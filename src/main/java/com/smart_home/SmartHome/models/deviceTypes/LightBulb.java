@@ -35,9 +35,9 @@ public class LightBulb extends Device {
     public String getColor() { return color; }
     public void setColor(String color) { this.color = color; }
 
-    public boolean dim(float byPercent) {
-        if (byPercent < 0.0f || byPercent > 1.0f) { return false; }
-        brightness -= brightness * byPercent;
+    public boolean dim(int byPercent) {
+        if (byPercent < 0 || byPercent > 100) { return false; }
+        brightness -= brightness * byPercent/100;
         return true;
     }
 }

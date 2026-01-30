@@ -1,5 +1,7 @@
 package com.smart_home.SmartHome.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 
@@ -12,7 +14,13 @@ public abstract class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @JsonProperty("isOn")
     private boolean isOn = false;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    @JsonIgnoreProperties("devices")
+    private Room room;
 
     protected Device() {}
 
@@ -26,5 +34,15 @@ public abstract class Device {
 
     public boolean isOn() { return isOn; }
     public void toggle() { isOn = !isOn; }
+    public void setOn(boolean on) { this.isOn = on; }
+
+    public Room getRoom() { return room; }
+    public void setRoom(Room room) { this.room = room; }
+
+    @Transient
+    public String getDeviceType() {
+        return this.getClass().getSimpleName();
+    }
+
 }
 

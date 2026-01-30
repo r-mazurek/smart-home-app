@@ -7,27 +7,32 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue("thermostat")
 public class Thermostat extends Device {
-    private float targetTemperature;
+    private double temperature;
+    private double targetTemperature;
 
     protected Thermostat() {}
 
-    public Thermostat(String name, float targetTemperature) {
+    public Thermostat(String name, double temperature) {
         super(name);
-        this.targetTemperature = targetTemperature;
+        this.temperature = targetTemperature;
+        this.targetTemperature = temperature;
     }
 
     public Thermostat(String name) {
         this(name, 21.0f);
     }
 
-    public float getTargetTemperature() {
-        return targetTemperature;
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+    public double getTemperature() {
+        return temperature;
     }
 
-    public boolean setTargetTemperature(float targetTemperature) {
-        if (targetTemperature < 16.0f || targetTemperature > 26.0f) return false;
-
+    public void setTargetTemperature(double targetTemperature) {
         this.targetTemperature = targetTemperature;
-        return true;
+    }
+    public double getTargetTemperature() {
+        return targetTemperature;
     }
 }

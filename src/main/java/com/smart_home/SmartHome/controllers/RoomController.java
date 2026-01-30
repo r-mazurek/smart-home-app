@@ -5,6 +5,7 @@ import com.smart_home.SmartHome.models.Device;
 import com.smart_home.SmartHome.models.Scene;
 import com.smart_home.SmartHome.models.deviceTypes.LightBulb;
 import com.smart_home.SmartHome.models.deviceTypes.Thermostat;
+import com.smart_home.SmartHome.repositories.DeviceRepository;
 import com.smart_home.SmartHome.services.RoomService;
 
 import com.smart_home.SmartHome.services.SceneService;
@@ -25,9 +26,12 @@ public class RoomController {
     private final RoomService service;
     private final SceneService sceneService;
 
-    public RoomController(RoomService service, SceneService sceneService) {
+    private final DeviceRepository deviceRepository;
+
+    public RoomController(RoomService service, SceneService sceneService, DeviceRepository deviceRepository) {
         this.service = service;
         this.sceneService = sceneService;
+        this.deviceRepository = deviceRepository;
 
         // TEST DATA
         service.addRoom("kitchen");
@@ -97,7 +101,7 @@ public class RoomController {
 
         room.addDevice(newDevice);
         service.updateRoom(room);
-        return newDevice;
+        return service.getRoom(roomName).getDevices().getLast();
     }
 
     @GetMapping("/{roomName}/devices")

@@ -54,8 +54,8 @@ public class RoomService {
         roomRepository.save(room);
     }
 
-    public void updateRoom(Room room){
-        roomRepository.save(room);
+    public Room updateRoom(Room room){
+        return roomRepository.save(room);
     }
 
     public Room renameRoom(String oldName, String newName){
@@ -83,7 +83,6 @@ public class RoomService {
             // log
             String status = device.isOn() ? "on" : "off";
             String msg = "Device " + deviceName + " in " + roomName + " has been switched " + status;
-            eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
             EventLog savedLog = eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
             sseController.sendLogToClients(savedLog);
 
@@ -99,7 +98,6 @@ public class RoomService {
             // log
             String status = device.isOn() ? "on" : "off";
             String msg = "Device " + device.getName() + " in " + room.getName() + " has been switched " + status;
-            eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
             EventLog savedLog = eventLogRepository.save(new EventLog("DEVICE_ACTION", msg));
             sseController.sendLogToClients(savedLog);
 
