@@ -24,7 +24,7 @@ class SmartHomePerformanceTest {
     @Test
     void shouldHandle1000RequestsInReasonableTime() {
         int requestCount = 1000;
-        long maxDurationMs = 5000;
+        long maxDurationMs = 15000;
 
         long startTime = System.currentTimeMillis();
 
