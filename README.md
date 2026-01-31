@@ -11,7 +11,7 @@ Projekt końcowy na przedmioty:
 ---
 
 ## Opis Projektu
-System backendowy do zarządzania inteligentnym domem napisany w Java 21 i Spring Boot. Aplikacja umożliwia zarządzanie pokojami i urządzeniami (oświetlenie, termostaty). Zawiera logikę automatyzacji ("Smart Home Brain") reagującą na warunki pogodowe i czasowe.s
+System do zarządzania inteligentnym domem napisany w Java 21 i Spring Boot. Aplikacja umożliwia zarządzanie pokojami i urządzeniami (oświetlenie, termostaty). Zawiera logikę automatyzacji ("Smart Home Brain") reagującą na warunki pogodowe i czasowe. Posiada przejrzysty i intuicyjny frontend napisany w Next.js.
 
 Projekt realizuje pełne pokrycie testami automatycznymi (jednostkowe, API, perfomance i cucumber). Test coverage wynosi >80%.
 
