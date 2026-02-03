@@ -20,12 +20,10 @@ export default function Home() {
     const logs = useAppSelector((state) => state.logs.items);
     const { t } = useLanguage();
 
-    // Login & Auth State
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isRegistering, setIsRegistering] = useState(false); // Toggle between Login/Register
+    const [isRegistering, setIsRegistering] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    // Logs & Protocol State
     const [logSource, setLogSource] = useState<"SSE" | "MQTT">("SSE");
     const [connectionStatus, setConnectionStatus] = useState("disconnected");
 
@@ -110,7 +108,6 @@ export default function Home() {
 
                 if (res.ok) {
                     setIsLoggedIn(true);
-                    // Set a simple client-side cookie to remember login state
                     document.cookie = "client_login=true; max-age=3600; path=/";
                 } else {
                     alert("Błąd logowania - niepoprawne dane.");
@@ -150,7 +147,6 @@ export default function Home() {
         setConnectionStatus("connecting...");
 
         if (logSource === "SSE") {
-            // === SSE MODE ===
             eventSource = new EventSource("http://localhost:8080/stream-logs");
             eventSource.onopen = () => setConnectionStatus("connected");
 
@@ -164,8 +160,6 @@ export default function Home() {
                 eventSource?.close();
             };
         } else {
-            // === MQTT MODE ===
-            // Using port 8083 which is standard for WebSockets on EMQX
             const brokerUrl = "ws://broker.emqx.io:8083/mqtt";
 
             mqttClient = mqtt.connect(brokerUrl, {
@@ -175,20 +169,16 @@ export default function Home() {
             mqttClient.on("connect", () => {
                 setConnectionStatus("connected");
                 mqttClient?.subscribe("smarthome/devices");
-                mqttClient?.subscribe("smarthome/logs"); // Subscribe to logs topic as well
             });
 
             mqttClient.on("message", (topic, message) => {
-                // Accept logs from both topics just in case
                 if (topic === "smarthome/devices" || topic === "smarthome/logs") {
                     try {
                         const payload = message.toString();
-                        // Sometimes MQTT sends plain text, try to parse or wrap it
                         let newLog: EventLog;
                         try {
                             newLog = JSON.parse(payload);
                         } catch {
-                            // If not JSON, wrap it
                             newLog = {
                                 id: Date.now(),
                                 eventType: "MQTT_MSG",
@@ -251,13 +241,13 @@ export default function Home() {
 
     if (!isLoggedIn) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <div className="min-h-screen flex items-center justify-center bg-gray-100 text-gray-600">
                 <form onSubmit={handleAuth} className="bg-white p-8 rounded-xl shadow-lg w-96">
                     <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
                         {isRegistering ? "📝 Rejestracja" : "🔐 Smart Home Login"}
                     </h2>
                     <input
-                        type="text" placeholder="Użytkownik" className="w-full mb-4 p-2 border rounded"
+                        type="text" placeholder="Użytkownik" className="w-full mb-4 p-2 border rounded col-black"
                         value={username} onChange={e => setUsername(e.target.value)}
                     />
                     <input
@@ -318,12 +308,10 @@ export default function Home() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                {/* KOLUMNA 1 i 2: POKOJE */}
                 <div className="lg:col-span-2 space-y-6">
 
                     <FilterBar onFilterChange={handleFilterChange} />
 
-                    {/* Formularz dodawania */}
                     <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center">
                         <span className="text-gray-600 font-medium">{t.roomManagement}</span>
                         <Link
