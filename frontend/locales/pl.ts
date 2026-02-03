@@ -78,5 +78,8 @@ export const pl = {
     summaryTitle: "Podsumowanie",
     // Funkcja dla dynamicznego tekstu
     summaryText: (count: number, rooms: number) =>
-        `W twoim domu znajduje się łącznie ${count} urządzeń rozmieszczonych w ${rooms} pomieszczeniach.`
+        `W twoim domu znajduje się łącznie ${count} urządzeń rozmieszczonych w ${rooms} pomieszczeniach.`,
+
+    logout: "Wyloguj Się",
+    clearLogs: "Wyczyść",
 };

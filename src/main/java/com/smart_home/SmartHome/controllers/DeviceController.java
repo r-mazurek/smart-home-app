@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.smart_home.SmartHome.mqtt.MqttGateway;
+import tools.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/devices")
@@ -17,11 +19,13 @@ public class DeviceController {
     private final DeviceRepository deviceRepository;
     private final SseController sseController;
     private final EventLogRepository eventLogRepository;
+    private final MqttGateway mqttGateway;
 
-    public DeviceController(DeviceRepository deviceRepository, SseController sseController, EventLogRepository eventLogRepository) {
+    public DeviceController(DeviceRepository deviceRepository, SseController sseController, EventLogRepository eventLogRepository, MqttGateway mqttGateway) {
         this.deviceRepository = deviceRepository;
         this.sseController = sseController;
         this.eventLogRepository = eventLogRepository;
+        this.mqttGateway = mqttGateway;
     }
 
     @GetMapping
@@ -54,9 +58,16 @@ public class DeviceController {
         return deviceRepository.findById(id)
                 .map(device -> {
                     device.toggle();
-                    sseController.sendLogToClients(new EventLog("DEVICE_TOGGLE", device.getName() + " (id: " + device.getId().toString() + ") has been toggled " + (device.isOn() ? "ON" : "OFF")));
+                    EventLog eventLog = new EventLog("DEVICE_TOGGLE", device.getName() + " (id: " + device.getId().toString() + ") has been toggled " + (device.isOn() ? "ON" : "OFF"));
+
                     deviceRepository.save(device);
-                    eventLogRepository.save(new EventLog("DEVICE_TOGGLE", device.getName() + "has been toggled " + (device.isOn() ? "ON" : "OFF") + "."));
+                    eventLogRepository.save(eventLog);
+
+                    sseController.sendLogToClients(eventLog);
+
+                    String logJson = new ObjectMapper().writeValueAsString(eventLog);
+                    mqttGateway.sendToMqtt(logJson, "smarthome/devices");
+
                     return ResponseEntity.ok(device);
                 })
                 .orElse(ResponseEntity.notFound().build());

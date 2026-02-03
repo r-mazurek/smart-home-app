@@ -24,7 +24,7 @@ class UserServiceTest {
     void shouldRegisterUser_WhenNotExists() {
         when(userRepository.findByNameIgnoreCase("John")).thenReturn(null);
 
-        User created = userService.registerUser("John", "secret");
+        User created = userService.registerUser("John", "secret", User.Role.USER);
 
         assertNotNull(created);
         assertEquals("John", created.getName());
@@ -33,9 +33,9 @@ class UserServiceTest {
 
     @Test
     void shouldNotRegisterUser_WhenExists() {
-        when(userRepository.findByNameIgnoreCase("John")).thenReturn(new User("John", "pass"));
+        when(userRepository.findByNameIgnoreCase("John")).thenReturn(new User("John", "pass", User.Role.USER));
 
-        User created = userService.registerUser("John", "newpass");
+        User created = userService.registerUser("John", "newpass", User.Role.USER);
 
         assertNull(created);
         verify(userRepository, never()).save(any(User.class));
@@ -43,7 +43,7 @@ class UserServiceTest {
 
     @Test
     void shouldLoginUser_WithCorrectPassword() {
-        User user = new User("Alice", "1234");
+        User user = new User("Alice", "1234", User.Role.USER);
         when(userRepository.findByNameIgnoreCase("Alice")).thenReturn(user);
 
         boolean result = userService.loginUser("Alice", "1234");
@@ -53,7 +53,7 @@ class UserServiceTest {
 
     @Test
     void shouldDeleteUser() {
-        User user = new User("Bob", "pass");
+        User user = new User("Bob", "pass",  User.Role.USER);
         when(userRepository.findByNameIgnoreCase("Bob")).thenReturn(user);
 
         boolean deleted = userService.deleteUser("Bob");

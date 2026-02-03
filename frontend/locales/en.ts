@@ -71,5 +71,8 @@ export const en = {
     chartStatus: "Device Status",
     summaryTitle: "Summary",
     summaryText: (count: number, rooms: number) =>
-        `Your home has a total of ${count} devices located across ${rooms} rooms.`
+        `Your home has a total of ${count} devices located across ${rooms} rooms.`,
+
+    logout: "Logout",
+    clearLogs: "Clear Logs",
 };

@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useAppDispatch, useAppSelector} from "@/lib/hooks";
-import { fetchRooms} from "@/lib/features/rooms/roomsSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { fetchRooms } from "@/lib/features/rooms/roomsSlice";
 import { EventLog, WeatherData } from "@/types";
-import Link from "next/link"
+import Link from "next/link";
 import FilterBar from "@/components/FilterBar";
-import { toggleDevice} from "@/lib/features/devices/devicesSlice";
-import {addLog} from "@/lib/features/logs/logsSlice";
+import { toggleDevice } from "@/lib/features/devices/devicesSlice";
+import {addLog, clearLogs} from "@/lib/features/logs/logsSlice";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import mqtt from "mqtt";
 
 export default function Home() {
     const dispatch = useAppDispatch();
@@ -18,6 +19,15 @@ export default function Home() {
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const logs = useAppSelector((state) => state.logs.items);
     const { t } = useLanguage();
+
+    // Login & Auth State
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isRegistering, setIsRegistering] = useState(false); // Toggle between Login/Register
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    // Logs & Protocol State
+    const [logSource, setLogSource] = useState<"SSE" | "MQTT">("SSE");
+    const [connectionStatus, setConnectionStatus] = useState("disconnected");
 
     const getWeatherIcon = (code: number) => {
         if (code === 0) return "☀️";
@@ -44,11 +54,18 @@ export default function Home() {
         queryParamsRef.current = queryParams;
     }, [pagination, queryParams]);
 
+    useEffect(() => {
+        if (document.cookie.includes("client_login=true")) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
     const handleFilterChange = (
         filters: {
             search: string,
             sort: string,
-            onlyActiveFilter: boolean }) => {
+            onlyActiveFilter: boolean
+        }) => {
         setQueryParams((prev) => ({
             ...prev,
             search: filters.search,
@@ -66,6 +83,142 @@ export default function Home() {
         }));
     };
 
+    const handleAuth = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            if (isRegistering) {
+                const role = username.toString().toLowerCase().includes("admin") ? "admin" : "user";
+                const res = await fetch(`http://localhost:8080/users/${username}?password=${password}&role=${role}`, {
+                    method: "POST",
+                });
+                if (res.ok) {
+                    alert("Rejestracja udana! Możesz się teraz zalogować.");
+                    setIsRegistering(false);
+                } else {
+                    alert("Błąd rejestracji.");
+                }
+            } else {
+                const formData = new FormData();
+                formData.append("username", username);
+                formData.append("password", password);
+
+                const res = await fetch("http://localhost:8080/users/login", {
+                    method: "POST",
+                    body: formData,
+                    credentials: "include",
+                });
+
+                if (res.ok) {
+                    setIsLoggedIn(true);
+                    // Set a simple client-side cookie to remember login state
+                    document.cookie = "client_login=true; max-age=3600; path=/";
+                } else {
+                    alert("Błąd logowania - niepoprawne dane.");
+                }
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Błąd połączenia z serwerem.");
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            await fetch("http://localhost:8080/users/logout", {
+                method: "POST",
+                credentials: "include"
+            });
+        } catch (err) {
+            console.error("Błąd wylogowania na backendzie", err);
+        }
+
+        document.cookie = "client_login=; max-age=0; path=/";
+        setIsLoggedIn(false);
+        setUsername("");
+        setPassword("");
+        setLogSource("SSE");
+    };
+
+    useEffect(() => {
+        if (!isLoggedIn) return;
+
+        fetchData();
+
+        let eventSource: EventSource | null = null;
+        let mqttClient: mqtt.MqttClient | null = null;
+
+        setConnectionStatus("connecting...");
+
+        if (logSource === "SSE") {
+            // === SSE MODE ===
+            eventSource = new EventSource("http://localhost:8080/stream-logs");
+            eventSource.onopen = () => setConnectionStatus("connected");
+
+            eventSource.addEventListener("new-log", (event) => {
+                const newLog: EventLog = JSON.parse(event.data);
+                dispatch(addLog(newLog));
+            });
+
+            eventSource.onerror = () => {
+                setConnectionStatus("Error");
+                eventSource?.close();
+            };
+        } else {
+            // === MQTT MODE ===
+            // Using port 8083 which is standard for WebSockets on EMQX
+            const brokerUrl = "ws://broker.emqx.io:8083/mqtt";
+
+            mqttClient = mqtt.connect(brokerUrl, {
+                clientId: "nextjs_client_" + Math.random().toString(16).substring(2, 8),
+            });
+
+            mqttClient.on("connect", () => {
+                setConnectionStatus("connected");
+                mqttClient?.subscribe("smarthome/devices");
+                mqttClient?.subscribe("smarthome/logs"); // Subscribe to logs topic as well
+            });
+
+            mqttClient.on("message", (topic, message) => {
+                // Accept logs from both topics just in case
+                if (topic === "smarthome/devices" || topic === "smarthome/logs") {
+                    try {
+                        const payload = message.toString();
+                        // Sometimes MQTT sends plain text, try to parse or wrap it
+                        let newLog: EventLog;
+                        try {
+                            newLog = JSON.parse(payload);
+                        } catch {
+                            // If not JSON, wrap it
+                            newLog = {
+                                id: Date.now(),
+                                eventType: "MQTT_MSG",
+                                message: payload,
+                                timestamp: new Date().toISOString()
+                            };
+                        }
+                        dispatch(addLog(newLog));
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+            });
+
+            mqttClient.on("error", (err) => {
+                console.error("MQTT Error:", err);
+                setConnectionStatus("Error");
+            });
+        }
+
+        return () => {
+            if (eventSource) {
+                eventSource.close();
+            }
+            if (mqttClient) {
+                mqttClient.end();
+            }
+        };
+    }, [logSource, isLoggedIn]);
+
     const fetchData = async () => {
         dispatch(fetchRooms({ page: 0 }));
 
@@ -79,35 +232,6 @@ export default function Home() {
             console.error("Błąd połączenia z API:", error);
         }
     };
-
-    useEffect(() => {
-        fetchData();
-        const eventSource = new EventSource("http://localhost:8080/stream-logs");
-        eventSource.onopen = () => {
-            console.log("Polaczono z SSE")
-        };
-
-        eventSource.addEventListener("new-log", (event) => {
-            const newLog: EventLog = JSON.parse(event.data);
-            dispatch(addLog(newLog));
-            dispatch(fetchRooms({
-                page: paginationRef.current.currentPage,
-                size: 4,
-                search: queryParams.search,
-                sortBy: queryParams.sortBy
-            }));
-        });
-
-        eventSource.onerror = (err) => {
-            console.error("Blad SSE: ", err);
-            eventSource.close();
-        };
-
-        return () => {
-            eventSource.close();
-        };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const displayedRooms = onlyActiveFilter
         ? rooms.filter(room => room.devices.some((d) => d.isOn))
@@ -125,11 +249,53 @@ export default function Home() {
         }
     };
 
+    if (!isLoggedIn) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-100">
+                <form onSubmit={handleAuth} className="bg-white p-8 rounded-xl shadow-lg w-96">
+                    <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
+                        {isRegistering ? "📝 Rejestracja" : "🔐 Smart Home Login"}
+                    </h2>
+                    <input
+                        type="text" placeholder="Użytkownik" className="w-full mb-4 p-2 border rounded"
+                        value={username} onChange={e => setUsername(e.target.value)}
+                    />
+                    <input
+                        type="password" placeholder="Hasło" className="w-full mb-6 p-2 border rounded"
+                        value={password} onChange={e => setPassword(e.target.value)}
+                    />
+                    <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 mb-4">
+                        {isRegistering ? "Zarejestruj się" : "Zaloguj się"}
+                    </button>
+
+                    <div className="text-center text-sm text-gray-500">
+                        {isRegistering ? "Masz już konto? " : "Nie masz konta? "}
+                        <button
+                            type="button"
+                            onClick={() => setIsRegistering(!isRegistering)}
+                            className="text-blue-600 underline font-bold"
+                        >
+                            {isRegistering ? "Zaloguj się" : "Zarejestruj się"}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+
     return (
         <main className="min-h-screen p-8 bg-gray-50 text-gray-800 font-sans">
             <LanguageSwitcher />
 
-            <h1 className="text-4xl font-bold mb-8 text-blue-600">🏠 {t.dashboard}</h1>
+            <div className="flex justify-between items-center mb-8">
+                <h1 className="text-4xl font-bold text-blue-600">🏠 {t.dashboard}</h1>
+                <button
+                    onClick={handleLogout}
+                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow transition-colors flex items-center gap-2 font-bold"
+                >
+                    🚪 {t ? t.logout || "Wyloguj" : "Logout"}
+                </button>
+            </div>
 
             <div className="flex gap-4 mb-4">
                 <Link href="/devices" className="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 transition">
@@ -141,7 +307,7 @@ export default function Home() {
             </div>
 
             {weather && (
-                <div className="bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-4">
+                <div className="bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-4 mb-8">
                     <span className="text-4xl">{getWeatherIcon(weather.current_weather.weathercode)}</span>
                     <div>
                         <p className="text-2xl font-bold">{weather.current_weather.temperature}°C</p>
@@ -201,7 +367,7 @@ export default function Home() {
                                         {room.devices.map((device) => (
                                             <li key={device.id} className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
                                                 <span className={device.isOn ? "font-bold text-green-600" : "text-gray-500"}>
-                                                  {device.name}
+                                                    {device.name}
                                                 </span>
                                                 {device.temperature !== undefined && device.temperature !== null && device.isOn && (
                                                     <span className="text-xs font-mono bg-blue-100 text-blue-700 px-2 py-1 rounded">
@@ -217,7 +383,7 @@ export default function Home() {
                                                         ${device.isOn
                                                         ? "bg-gradient-to-r from-green-400 to-green-500 text-white shadow-[0_4px_12px_rgba(34,197,94,0.3)] hover:shadow-[0_6px_16px_rgba(34,197,94,0.4)]"
                                                         : "bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 hover:text-gray-700 hover:border-gray-400"
-                                                        }
+                                                    }
     `                                               }
                                                 >
                                                     {device.isOn ? (t ? t.on : "ON") : (t ? t.off : "OFF")}
@@ -253,9 +419,40 @@ export default function Home() {
                     </div>
                 </div>
 
-
+                {/* --- 3. LOGS COLUMN WITH PROTOCOL SWITCHER --- */}
                 <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500 h-fit">
-                    <h2 className="text-xl font-bold mb-4 text-gray-700">📜 {t.logs}</h2>
+                    <div className="flex justify-between items-center mb-4 border-b pb-2">
+                        <h2 className="text-xl font-bold text-gray-700">📜 {t.logs}</h2>
+
+                        {/* PROTOCOL SWITCHER INSIDE LOGS HEADER */}
+                        <div className="flex flex-row items-center gap-6">
+                            <button
+                                onClick={() => setLogSource(prev => prev === "SSE" ? "MQTT" : "SSE")}
+                                className={`px-3 py-1 rounded-full text-xs font-bold mb-1 transition-all border ${
+                                    logSource === "SSE"
+                                        ? "bg-green-100 text-green-700 border-green-300"
+                                        : "bg-blue-100 text-blue-700 border-blue-300"
+                                }`}
+                            >
+                                📡 {logSource} 🔄
+                            </button>
+
+                            <span className={`text-[10px] uppercase font-bold tracking-wider ${
+                                connectionStatus.includes("connected") ? "text-green-500" : "text-red-500"
+                            }`}>
+                                {connectionStatus}
+                            </span>
+
+                            <button
+                                onClick={() => dispatch(clearLogs())}
+                                className="px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-500 border border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-colors"
+                            >
+                                🗑️ {t.clearLogs}
+                            </button>
+
+                        </div>
+                    </div>
+
                     <div className="space-y-3 max-h-[500px] overflow-y-auto custom-scrollbar pr-2">
                         {logs.length === 0 && <p className="text-gray-400">{t.noLogs}</p>}
                         {logs.map((log) => (

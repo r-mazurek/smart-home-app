@@ -2,12 +2,12 @@ package com.smart_home.SmartHome.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 public class EventLog {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final Long id = UUID.randomUUID().getMostSignificantBits();
 
     private String message;
     private LocalDateTime timestamp;

@@ -8,18 +8,27 @@ import jakarta.persistence.Id;
 @Entity
 @Table(name="app_users")
 public class User {
+    public enum Role {
+        ADMIN,
+        USER
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
     // soon may add preferences or things like that to help AI suggest the best settings
 
     protected User() {};
 
-    public User (String name, String password) {
+    public User (String name, String password, Role role) {
         this.name = name;
         this.password = password;
+        this.role = role;
     }
 
     public long getId() { return id; }
@@ -27,4 +36,6 @@ public class User {
     public void setName(String name) { this.name = name; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
 }

@@ -19,8 +19,11 @@ const logsSlice = createSlice({
                 state.items.pop()
             }
         },
+        clearLogs: (state) => {
+            state.items = [];
+        },
     },
 });
 
-export const { addLog } = logsSlice.actions;
+export const { addLog, clearLogs } = logsSlice.actions;
 export default logsSlice.reducer;
