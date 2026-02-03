@@ -13909,3 +13909,426 @@ This generated password is for development use only. Your security configuration
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
 2026-02-03T20:48:41.016+01:00  INFO 28346 --- [SmartHome] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-03T20:50:03.885+01:00  INFO 28645 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplication       : Starting SmartHomeApplication using Java 23.0.2 with PID 28645 (/Users/rafalm/Documents/Studia/SmartHome/target/classes started by rafalm in /Users/rafalm/Documents/Studia/SmartHome)
+2026-02-03T20:50:03.888+01:00  INFO 28645 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-02-03T20:50:04.275+01:00  INFO 28645 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-03T20:50:04.350+01:00  INFO 28645 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 5 JPA repository interfaces.
+2026-02-03T20:50:04.420+01:00  INFO 28645 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-02-03T20:50:04.424+01:00  INFO 28645 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-02-03T20:50:04.680+01:00  INFO 28645 --- [SmartHome] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-02-03T20:50:04.687+01:00  INFO 28645 --- [SmartHome] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-03T20:50:04.687+01:00  INFO 28645 --- [SmartHome] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.14]
+2026-02-03T20:50:04.710+01:00  INFO 28645 --- [SmartHome] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 787 ms
+2026-02-03T20:50:04.808+01:00  INFO 28645 --- [SmartHome] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-03T20:50:04.831+01:00  INFO 28645 --- [SmartHome] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2026-02-03T20:50:05.027+01:00  INFO 28645 --- [SmartHome] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-03T20:50:05.048+01:00  INFO 28645 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-03T20:50:05.165+01:00  INFO 28645 --- [SmartHome] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:smarthomedb user=SA
+2026-02-03T20:50:05.166+01:00  INFO 28645 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-03T20:50:05.181+01:00  WARN 28645 --- [SmartHome] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-03T20:50:05.193+01:00  INFO 28645 --- [SmartHome] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:smarthomedb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: SMARTHOMEDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-03T20:50:05.679+01:00  INFO 28645 --- [SmartHome] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-03T20:50:05.726+01:00  INFO 28645 --- [SmartHome] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:50:05.780+01:00  INFO 28645 --- [SmartHome] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-03T20:50:06.406+01:00  WARN 28645 --- [SmartHome] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-03T20:50:06.447+01:00  WARN 28645 --- [SmartHome] [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 9396ac50-c7be-41cd-8679-3899460103f1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-02-03T20:50:06.451+01:00  INFO 28645 --- [SmartHome] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-02-03T20:50:06.686+01:00  INFO 28645 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:50:06.686+01:00  INFO 28645 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:50:06.686+01:00  INFO 28645 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:50:06.686+01:00  INFO 28645 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:50:06.686+01:00  INFO 28645 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:50:06.687+01:00  INFO 28645 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:50:06.687+01:00  INFO 28645 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:50:06.687+01:00  INFO 28645 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:50:06.697+01:00  INFO 28645 --- [SmartHome] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-02-03T20:50:06.702+01:00  INFO 28645 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplication       : Started SmartHomeApplication in 3.075 seconds (process running for 3.33)
+2026-02-03T20:56:29.094+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-03T20:56:29.102+01:00  INFO 28645 --- [SmartHome] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-02-03T20:56:29.103+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:56:29.104+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:56:29.104+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:56:29.104+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:56:29.105+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:56:29.105+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:56:29.105+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:56:29.106+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:56:29.110+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:56:29.113+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-02-03T20:56:29.116+01:00  INFO 28645 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-02-03T20:57:06.573+01:00  INFO 29187 --- [SmartHome] [main] c.s.S.p.SmartHomePerformanceTest         : Starting SmartHomePerformanceTest using Java 23.0.2 with PID 29187 (started by rafalm in /Users/rafalm/Documents/Studia/SmartHome)
+2026-02-03T20:57:06.574+01:00  INFO 29187 --- [SmartHome] [main] c.s.S.p.SmartHomePerformanceTest         : No active profile set, falling back to 1 default profile: "default"
+2026-02-03T20:57:06.973+01:00  INFO 29187 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-03T20:57:07.044+01:00  INFO 29187 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 67 ms. Found 5 JPA repository interfaces.
+2026-02-03T20:57:07.133+01:00  INFO 29187 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-02-03T20:57:07.137+01:00  INFO 29187 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-02-03T20:57:07.387+01:00  INFO 29187 --- [SmartHome] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-02-03T20:57:07.395+01:00  INFO 29187 --- [SmartHome] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-03T20:57:07.396+01:00  INFO 29187 --- [SmartHome] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.14]
+2026-02-03T20:57:07.421+01:00  INFO 29187 --- [SmartHome] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 750 ms
+2026-02-03T20:57:07.517+01:00  INFO 29187 --- [SmartHome] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-03T20:57:07.542+01:00  INFO 29187 --- [SmartHome] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2026-02-03T20:57:07.773+01:00  INFO 29187 --- [SmartHome] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-03T20:57:07.791+01:00  INFO 29187 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-03T20:57:07.890+01:00  INFO 29187 --- [SmartHome] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:smarthomedb user=SA
+2026-02-03T20:57:07.891+01:00  INFO 29187 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-03T20:57:07.903+01:00  WARN 29187 --- [SmartHome] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-03T20:57:07.913+01:00  INFO 29187 --- [SmartHome] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:smarthomedb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: SMARTHOMEDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-03T20:57:08.394+01:00  INFO 29187 --- [SmartHome] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-03T20:57:08.432+01:00  INFO 29187 --- [SmartHome] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:57:08.487+01:00  INFO 29187 --- [SmartHome] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-03T20:57:09.118+01:00  WARN 29187 --- [SmartHome] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-03T20:57:09.172+01:00  WARN 29187 --- [SmartHome] [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: c6cc1f87-bd2f-4616-96fe-6eaf93f6db13
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-02-03T20:57:09.176+01:00  INFO 29187 --- [SmartHome] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-02-03T20:57:09.435+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:09.436+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:57:09.436+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:09.436+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:09.436+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:57:09.436+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:09.436+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:09.437+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:09.445+01:00  INFO 29187 --- [SmartHome] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 61893 (http) with context path '/'
+2026-02-03T20:57:09.450+01:00  INFO 29187 --- [SmartHome] [main] c.s.S.p.SmartHomePerformanceTest         : Started SmartHomePerformanceTest in 3.045 seconds (process running for 3.912)
+2026-02-03T20:57:10.174+01:00  INFO 29187 --- [SmartHome] [http-nio-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-03T20:57:10.174+01:00  INFO 29187 --- [SmartHome] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-03T20:57:10.175+01:00  INFO 29187 --- [SmartHome] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-02-03T20:57:10.242+01:00  WARN 29187 --- [SmartHome] [http-nio-auto-1-exec-1] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-02-03T20:57:13.581+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:13.581+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:57:13.581+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:13.582+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:13.582+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:13.582+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:13.582+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:57:13.582+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:13.835+01:00  INFO 29187 --- [SmartHome] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smart_home.SmartHome.api.SmartHomeApiTest]: SmartHomeApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-03T20:57:13.842+01:00  INFO 29187 --- [SmartHome] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smart_home.SmartHome.SmartHomeApplication for test class com.smart_home.SmartHome.api.SmartHomeApiTest
+2026-02-03T20:57:13.845+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:13.845+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:57:13.845+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:13.845+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:13.845+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:57:13.845+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:13.845+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:13.845+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:14.301+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:14.302+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:57:14.302+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:14.302+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:14.302+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:14.302+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:14.302+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:57:14.302+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:14.504+01:00  INFO 29187 --- [SmartHome] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smart_home.SmartHome.SmartHomeApplicationTests]: SmartHomeApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-03T20:57:14.506+01:00  INFO 29187 --- [SmartHome] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smart_home.SmartHome.SmartHomeApplication for test class com.smart_home.SmartHome.SmartHomeApplicationTests
+2026-02-03T20:57:14.524+01:00  INFO 29187 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplicationTests  : Starting SmartHomeApplicationTests using Java 23.0.2 with PID 29187 (started by rafalm in /Users/rafalm/Documents/Studia/SmartHome)
+2026-02-03T20:57:14.525+01:00  INFO 29187 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2026-02-03T20:57:14.611+01:00  INFO 29187 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-03T20:57:14.618+01:00  INFO 29187 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 5 JPA repository interfaces.
+2026-02-03T20:57:14.643+01:00  INFO 29187 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-02-03T20:57:14.643+01:00  INFO 29187 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-02-03T20:57:14.689+01:00  INFO 29187 --- [SmartHome] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-03T20:57:14.702+01:00  INFO 29187 --- [SmartHome] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-03T20:57:14.703+01:00  INFO 29187 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-02-03T20:57:14.704+01:00  INFO 29187 --- [SmartHome] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:smarthomedb user=SA
+2026-02-03T20:57:14.704+01:00  INFO 29187 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-02-03T20:57:14.704+01:00  WARN 29187 --- [SmartHome] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-03T20:57:14.705+01:00  INFO 29187 --- [SmartHome] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:smarthomedb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: SMARTHOMEDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-03T20:57:14.726+01:00  INFO 29187 --- [SmartHome] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-03T20:57:14.731+01:00  INFO 29187 --- [SmartHome] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:57:14.837+01:00  WARN 29187 --- [SmartHome] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-03T20:57:14.864+01:00  WARN 29187 --- [SmartHome] [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: b05f4b53-4c44-487c-b8f3-8b33153fabfa
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-02-03T20:57:14.865+01:00  INFO 29187 --- [SmartHome] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-02-03T20:57:14.997+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:14.997+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:57:14.997+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:14.997+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:14.998+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:57:14.998+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:14.998+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:14.998+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:15.000+01:00  INFO 29187 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplicationTests  : Started SmartHomeApplicationTests in 0.489 seconds (process running for 9.462)
+2026-02-03T20:57:15.011+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:15.012+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:57:15.012+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:15.012+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:15.012+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:15.012+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:15.012+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:57:15.012+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:15.428+01:00  INFO 29187 --- [SmartHome] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smart_home.SmartHome.bdd.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-03T20:57:15.431+01:00  INFO 29187 --- [SmartHome] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smart_home.SmartHome.SmartHomeApplication for test class com.smart_home.SmartHome.bdd.CucumberSpringConfiguration
+2026-02-03T20:57:15.432+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:15.432+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:57:15.432+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:15.432+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:15.432+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:57:15.432+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:15.432+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:15.433+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:15.521+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:15.521+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:57:15.521+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:15.521+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:15.521+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:15.521+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:15.521+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:57:15.521+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:15.634+01:00  INFO 29187 --- [SmartHome] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smart_home.SmartHome.bdd.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-03T20:57:15.634+01:00  INFO 29187 --- [SmartHome] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smart_home.SmartHome.SmartHomeApplication for test class com.smart_home.SmartHome.bdd.CucumberSpringConfiguration
+2026-02-03T20:57:15.636+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:15.636+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:57:15.636+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:15.636+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:15.636+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:57:15.636+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:15.636+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:15.636+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:15.655+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:57:15.655+01:00  INFO 29187 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:57:15.655+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:57:15.655+01:00  INFO 29187 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:57:15.655+01:00  INFO 29187 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:57:15.655+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:57:15.655+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:57:15.655+01:00  INFO 29187 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:57:15.662+01:00  INFO 29187 --- [SmartHome] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-03T20:57:15.667+01:00  INFO 29187 --- [SmartHome] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-02-03T20:57:15.671+01:00  INFO 29187 --- [SmartHome] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:57:15.673+01:00  INFO 29187 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-02-03T20:57:15.674+01:00  INFO 29187 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-02-03T20:57:15.678+01:00  INFO 29187 --- [SmartHome] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:57:15.678+01:00  INFO 29187 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-02-03T20:57:15.679+01:00  INFO 29187 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-02-03T20:59:16.036+01:00  INFO 29261 --- [SmartHome] [main] c.s.S.p.SmartHomePerformanceTest         : Starting SmartHomePerformanceTest using Java 23.0.2 with PID 29261 (started by rafalm in /Users/rafalm/Documents/Studia/SmartHome)
+2026-02-03T20:59:16.037+01:00  INFO 29261 --- [SmartHome] [main] c.s.S.p.SmartHomePerformanceTest         : No active profile set, falling back to 1 default profile: "default"
+2026-02-03T20:59:16.451+01:00  INFO 29261 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-03T20:59:16.526+01:00  INFO 29261 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 5 JPA repository interfaces.
+2026-02-03T20:59:16.598+01:00  INFO 29261 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-02-03T20:59:16.603+01:00  INFO 29261 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-02-03T20:59:16.849+01:00  INFO 29261 --- [SmartHome] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-02-03T20:59:16.856+01:00  INFO 29261 --- [SmartHome] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-03T20:59:16.857+01:00  INFO 29261 --- [SmartHome] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.14]
+2026-02-03T20:59:16.883+01:00  INFO 29261 --- [SmartHome] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 732 ms
+2026-02-03T20:59:16.974+01:00  INFO 29261 --- [SmartHome] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-03T20:59:16.999+01:00  INFO 29261 --- [SmartHome] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2026-02-03T20:59:17.220+01:00  INFO 29261 --- [SmartHome] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-03T20:59:17.238+01:00  INFO 29261 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-03T20:59:17.333+01:00  INFO 29261 --- [SmartHome] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:smarthomedb user=SA
+2026-02-03T20:59:17.334+01:00  INFO 29261 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-03T20:59:17.347+01:00  WARN 29261 --- [SmartHome] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-03T20:59:17.357+01:00  INFO 29261 --- [SmartHome] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:smarthomedb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: SMARTHOMEDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-03T20:59:17.850+01:00  INFO 29261 --- [SmartHome] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-03T20:59:17.888+01:00  INFO 29261 --- [SmartHome] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:59:17.939+01:00  INFO 29261 --- [SmartHome] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-03T20:59:18.580+01:00  WARN 29261 --- [SmartHome] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-03T20:59:18.633+01:00  WARN 29261 --- [SmartHome] [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: a4e86937-a381-4448-84dc-e2bada182d99
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-02-03T20:59:18.637+01:00  INFO 29261 --- [SmartHome] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-02-03T20:59:18.893+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:18.894+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:59:18.894+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:18.894+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:18.894+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:59:18.894+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:18.894+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:18.894+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:18.906+01:00  INFO 29261 --- [SmartHome] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 63436 (http) with context path '/'
+2026-02-03T20:59:18.911+01:00  INFO 29261 --- [SmartHome] [main] c.s.S.p.SmartHomePerformanceTest         : Started SmartHomePerformanceTest in 3.089 seconds (process running for 3.903)
+2026-02-03T20:59:19.569+01:00  INFO 29261 --- [SmartHome] [http-nio-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-03T20:59:19.569+01:00  INFO 29261 --- [SmartHome] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-03T20:59:19.570+01:00  INFO 29261 --- [SmartHome] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-02-03T20:59:19.627+01:00  WARN 29261 --- [SmartHome] [http-nio-auto-1-exec-1] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-02-03T20:59:22.695+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:22.695+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:59:22.696+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:22.696+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:22.696+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:22.696+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:22.696+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:59:22.696+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:22.930+01:00  INFO 29261 --- [SmartHome] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smart_home.SmartHome.api.SmartHomeApiTest]: SmartHomeApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-03T20:59:22.936+01:00  INFO 29261 --- [SmartHome] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smart_home.SmartHome.SmartHomeApplication for test class com.smart_home.SmartHome.api.SmartHomeApiTest
+2026-02-03T20:59:22.938+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:22.938+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:59:22.939+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:22.939+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:22.939+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:59:22.939+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:22.939+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:22.939+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:23.417+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:23.417+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:59:23.417+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:23.417+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:23.417+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:23.417+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:23.418+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:59:23.418+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:23.636+01:00  INFO 29261 --- [SmartHome] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smart_home.SmartHome.SmartHomeApplicationTests]: SmartHomeApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-03T20:59:23.639+01:00  INFO 29261 --- [SmartHome] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smart_home.SmartHome.SmartHomeApplication for test class com.smart_home.SmartHome.SmartHomeApplicationTests
+2026-02-03T20:59:23.660+01:00  INFO 29261 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplicationTests  : Starting SmartHomeApplicationTests using Java 23.0.2 with PID 29261 (started by rafalm in /Users/rafalm/Documents/Studia/SmartHome)
+2026-02-03T20:59:23.660+01:00  INFO 29261 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2026-02-03T20:59:23.743+01:00  INFO 29261 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-03T20:59:23.750+01:00  INFO 29261 --- [SmartHome] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 5 JPA repository interfaces.
+2026-02-03T20:59:23.772+01:00  INFO 29261 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-02-03T20:59:23.772+01:00  INFO 29261 --- [SmartHome] [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-02-03T20:59:23.816+01:00  INFO 29261 --- [SmartHome] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-03T20:59:23.827+01:00  INFO 29261 --- [SmartHome] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-03T20:59:23.828+01:00  INFO 29261 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-02-03T20:59:23.829+01:00  INFO 29261 --- [SmartHome] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:smarthomedb user=SA
+2026-02-03T20:59:23.829+01:00  INFO 29261 --- [SmartHome] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-02-03T20:59:23.829+01:00  WARN 29261 --- [SmartHome] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-03T20:59:23.829+01:00  INFO 29261 --- [SmartHome] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:smarthomedb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: SMARTHOMEDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-03T20:59:23.854+01:00  INFO 29261 --- [SmartHome] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-03T20:59:23.858+01:00  INFO 29261 --- [SmartHome] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:59:23.967+01:00  WARN 29261 --- [SmartHome] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-03T20:59:24.012+01:00  WARN 29261 --- [SmartHome] [main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 91fa71ed-cb1f-477f-8573-9d173c1f42bf
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-02-03T20:59:24.013+01:00  INFO 29261 --- [SmartHome] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-02-03T20:59:24.138+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:24.139+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:59:24.139+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:24.139+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:24.139+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:59:24.139+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:24.139+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:24.139+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:24.142+01:00  INFO 29261 --- [SmartHome] [main] c.s.SmartHome.SmartHomeApplicationTests  : Started SmartHomeApplicationTests in 0.496 seconds (process running for 9.133)
+2026-02-03T20:59:24.153+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:24.153+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:59:24.153+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:24.153+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:24.153+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:24.154+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:24.154+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:59:24.154+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:24.575+01:00  INFO 29261 --- [SmartHome] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smart_home.SmartHome.bdd.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-03T20:59:24.577+01:00  INFO 29261 --- [SmartHome] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smart_home.SmartHome.SmartHomeApplication for test class com.smart_home.SmartHome.bdd.CucumberSpringConfiguration
+2026-02-03T20:59:24.578+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:24.578+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:59:24.578+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:24.578+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:24.578+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:59:24.579+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:24.579+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:24.579+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:24.676+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:24.676+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:59:24.676+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:24.676+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:24.676+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:24.676+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:24.676+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:59:24.676+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:24.762+01:00  INFO 29261 --- [SmartHome] [main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smart_home.SmartHome.bdd.CucumberSpringConfiguration]: CucumberSpringConfiguration does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-02-03T20:59:24.763+01:00  INFO 29261 --- [SmartHome] [main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smart_home.SmartHome.SmartHomeApplication for test class com.smart_home.SmartHome.bdd.CucumberSpringConfiguration
+2026-02-03T20:59:24.764+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:24.764+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 1 subscriber(s).
+2026-02-03T20:59:24.764+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:24.764+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:24.764+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 1 subscriber(s).
+2026-02-03T20:59:24.764+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : started bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:24.764+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : started bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:24.764+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : started bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:24.782+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:mqttOutbound.serviceActivator} as a subscriber to the 'mqttOutboundChannel' channel
+2026-02-03T20:59:24.783+01:00  INFO 29261 --- [SmartHome] [main] o.s.integration.channel.DirectChannel    : Channel 'SmartHome.mqttOutboundChannel' has 0 subscriber(s).
+2026-02-03T20:59:24.783+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean 'mqttOutbound.serviceActivator'
+2026-02-03T20:59:24.783+01:00  INFO 29261 --- [SmartHome] [main] ProxyFactoryBean$MethodInvocationGateway : stopped bean 'mqttGateway#sendToMqtt(String, String)'
+2026-02-03T20:59:24.783+01:00  INFO 29261 --- [SmartHome] [main] .s.i.g.AnnotationGatewayProxyFactoryBean : stopped bean 'mqttGateway'; defined in: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'; from source: 'file [/Users/rafalm/Documents/Studia/SmartHome/target/classes/com/smart_home/SmartHome/mqtt/MqttGateway.class]'
+2026-02-03T20:59:24.783+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-02-03T20:59:24.783+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'SmartHome.errorChannel' has 0 subscriber(s).
+2026-02-03T20:59:24.783+01:00  INFO 29261 --- [SmartHome] [main] o.s.i.endpoint.EventDrivenConsumer       : stopped bean '_org.springframework.integration.errorLogger'
+2026-02-03T20:59:24.786+01:00  INFO 29261 --- [SmartHome] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-03T20:59:24.791+01:00  INFO 29261 --- [SmartHome] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-02-03T20:59:24.796+01:00  INFO 29261 --- [SmartHome] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:59:24.797+01:00  INFO 29261 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-02-03T20:59:24.797+01:00  INFO 29261 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-02-03T20:59:24.802+01:00  INFO 29261 --- [SmartHome] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-03T20:59:24.802+01:00  INFO 29261 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-02-03T20:59:24.803+01:00  INFO 29261 --- [SmartHome] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.

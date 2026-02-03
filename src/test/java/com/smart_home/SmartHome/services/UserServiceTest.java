@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -17,23 +18,36 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private UserService userService;
 
     @Test
     void shouldRegisterUser_WhenNotExists() {
-        when(userRepository.findByNameIgnoreCase("John")).thenReturn(null);
+        String rawPassword = "secret";
+        String encodedPassword = "encoded_secret";
 
-        User created = userService.registerUser("John", "secret", User.Role.USER);
+        when(userRepository.findByNameIgnoreCase("John")).thenReturn(null);
+        when(passwordEncoder.encode(rawPassword)).thenReturn(encodedPassword);
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        User created = userService.registerUser("John", rawPassword, User.Role.USER);
 
         assertNotNull(created);
         assertEquals("John", created.getName());
+        assertEquals(encodedPassword, created.getPassword());
+        assertEquals(User.Role.USER, created.getRole());
+
+        verify(passwordEncoder).encode(rawPassword);
         verify(userRepository).save(any(User.class));
     }
 
     @Test
     void shouldNotRegisterUser_WhenExists() {
-        when(userRepository.findByNameIgnoreCase("John")).thenReturn(new User("John", "pass", User.Role.USER));
+        when(userRepository.findByNameIgnoreCase("John"))
+                .thenReturn(new User("John", "somePass", User.Role.USER));
 
         User created = userService.registerUser("John", "newpass", User.Role.USER);
 
@@ -43,17 +57,38 @@ class UserServiceTest {
 
     @Test
     void shouldLoginUser_WithCorrectPassword() {
-        User user = new User("Alice", "1234", User.Role.USER);
-        when(userRepository.findByNameIgnoreCase("Alice")).thenReturn(user);
+        String rawPassword = "1234";
+        String dbHash = "hashed_1234";
 
-        boolean result = userService.loginUser("Alice", "1234");
+        User user = new User("Alice", dbHash, User.Role.USER);
+
+        when(userRepository.findByNameIgnoreCase("Alice")).thenReturn(user);
+        when(passwordEncoder.matches(rawPassword, dbHash)).thenReturn(true);
+
+        boolean result = userService.loginUser("Alice", rawPassword);
 
         assertTrue(result);
+        verify(passwordEncoder).matches(rawPassword, dbHash);
+    }
+
+    @Test
+    void shouldNotLoginUser_WithWrongPassword() {
+        String rawPassword = "wrong";
+        String dbHash = "hashed_1234";
+
+        User user = new User("Alice", dbHash, User.Role.USER);
+
+        when(userRepository.findByNameIgnoreCase("Alice")).thenReturn(user);
+        when(passwordEncoder.matches(rawPassword, dbHash)).thenReturn(false);
+
+        boolean result = userService.loginUser("Alice", rawPassword);
+
+        assertFalse(result);
     }
 
     @Test
     void shouldDeleteUser() {
-        User user = new User("Bob", "pass",  User.Role.USER);
+        User user = new User("Bob", "pass", User.Role.USER);
         when(userRepository.findByNameIgnoreCase("Bob")).thenReturn(user);
 
         boolean deleted = userService.deleteUser("Bob");
